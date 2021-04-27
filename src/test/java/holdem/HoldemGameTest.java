@@ -28,7 +28,7 @@ public class HoldemGameTest {
         assertEquals(BaseOperation.Fold, game.getEnableOperations().get(2));
     }
 
-    @Test public void should_return_160_when_all_players_only_bet_10_every_round() {
+    @Test public void total_amount_should_return_160_when_all_players_only_bet_10_every_round() {
         List<Player> players = Arrays.asList(
                 new Player("A", 100),
                 new Player("B", 100),
@@ -46,7 +46,7 @@ public class HoldemGameTest {
         assertEquals(3, game.getPendingPlayers().size());
     }
 
-    @Test public void should_return_90_when_there_is_player_that_fold_in_first_round_and_second_round() {
+    @Test public void total_amount_should_return_90_when_C_and_D_fold_in_first_round_and_second_round() {
         List<Player> players = Arrays.asList(
                 new Player("A", 100),
                 new Player("B", 100),
@@ -72,5 +72,31 @@ public class HoldemGameTest {
         assertEquals(2, game.getExitedPlayers().size());
         assertEquals(players.get(0), game.getProgressPlayer());
         assertEquals(1, game.getPendingPlayers().size());
+    }
+
+    @Test public void total_amount_should_return_60_when_B_C_and_D_fold_in_first_round_and_second_round_and_third_round() {
+        List<Player> players = Arrays.asList(
+                new Player("A", 100),
+                new Player("B", 100),
+                new Player("C", 100),
+                new Player("D", 100)
+        );
+        HoldemGame game = new HoldemGame(players);
+        Operation bet10 = new Operation(BaseOperation.Bet, 10);
+        Operation fold = new Operation(BaseOperation.Fold, 0);
+        game.play(bet10);
+        game.play(bet10);
+        game.play(bet10);
+        game.play(fold);
+        game.play(bet10);
+        game.play(bet10);
+        game.play(fold);
+        game.play(bet10);
+        game.play(fold);
+
+        assertEquals(60.0, game.getTotalAmount(), 0.0001);
+        assertEquals(3, game.getExitedPlayers().size());
+        assertEquals(players.get(0), game.getProgressPlayer());
+        assertEquals(0, game.getPendingPlayers().size());
     }
 }

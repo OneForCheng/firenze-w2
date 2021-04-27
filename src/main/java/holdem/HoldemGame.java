@@ -2,7 +2,6 @@ package holdem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class HoldemGame {
@@ -44,9 +43,6 @@ public class HoldemGame {
     public void play(Operation operation) {
         switch (operation.getBaseOperation()) {
             case Pass:
-                break;
-            case Bet:
-                this.totalAmount += operation.getAmount();
                 if (this.pendingPlayers.size() > 0) {
                     Player finishedPlayer = this.progressPlayer;
                     this.progressPlayer = this.pendingPlayers.remove(0);
@@ -59,7 +55,14 @@ public class HoldemGame {
                     this.progressPlayer = this.pendingPlayers.remove(0);
                 }
                 break;
+            case Bet:
             case Raise:
+                this.totalAmount += operation.getAmount();
+                if (this.pendingPlayers.size() > 0) {
+                    Player finishedPlayer = this.progressPlayer;
+                    this.progressPlayer = this.pendingPlayers.remove(0);
+                    this.pendingPlayers.add(finishedPlayer);
+                }
                 break;
         }
     }
