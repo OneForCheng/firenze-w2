@@ -119,7 +119,7 @@ public class HoldemGameTest {
         assertEquals(0, game.getTotalAmount(), 0.0001);
     }
 
-    @Test public void should_averagely_distribute_160_to_B_when_all_players_are_winner() {
+    @Test public void should_averagely_distribute_160_to_everyone_when_all_players_are_winner() {
         List<Player> players = Arrays.asList(
                 new Player("A", 100),
                 new Player("B", 100),
