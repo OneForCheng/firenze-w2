@@ -1,25 +1,23 @@
 package holdem;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HoldemGame {
     private List<Player> pendingPlayers;
     private List<BaseOperation> enableOperations;
-    private Player finishedPlayer;
     private Player progressPlayer;
     private List<Player> exitedPlayers;
     private double totalAmount;
 
     HoldemGame(List<Player> players) {
-        List<Player> clonePlayers = players.stream().collect(Collectors.toList());
+        List<Player> clonePlayers = new ArrayList<>(players);
         this.progressPlayer = clonePlayers.remove(0);
         this.pendingPlayers = clonePlayers;
         this.enableOperations = Arrays.asList(BaseOperation.Pass, BaseOperation.Bet, BaseOperation.Fold);
-        this.finishedPlayer = null;
-        this.exitedPlayers = Collections.emptyList();
+        this.exitedPlayers = new ArrayList<>();
         this.totalAmount = 0;
     }
 
@@ -29,10 +27,6 @@ public class HoldemGame {
 
     public List<BaseOperation> getEnableOperations() {
         return enableOperations;
-    }
-
-    public Player getFinishedPlayer() {
-        return this.finishedPlayer;
     }
 
     public Player getProgressPlayer() {
@@ -53,8 +47,17 @@ public class HoldemGame {
                 break;
             case Bet:
                 this.totalAmount += operation.getAmount();
+                if (this.pendingPlayers.size() > 0) {
+                    Player finishedPlayer = this.progressPlayer;
+                    this.progressPlayer = this.pendingPlayers.remove(0);
+                    this.pendingPlayers.add(finishedPlayer);
+                }
                 break;
             case Fold:
+                this.exitedPlayers.add(this.progressPlayer);
+                if (this.pendingPlayers.size() > 0) {
+                    this.progressPlayer = this.pendingPlayers.remove(0);
+                }
                 break;
             case Raise:
                 break;
