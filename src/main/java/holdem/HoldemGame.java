@@ -41,7 +41,8 @@ public class HoldemGame {
     }
 
     public void play(Operation operation) {
-        switch (operation.getBaseOperation()) {
+        BaseOperation baseOperation = operation.getBaseOperation();
+        switch (baseOperation) {
             case Pass:
                 if (this.pendingPlayers.size() > 0) {
                     Player finishedPlayer = this.progressPlayer;
@@ -58,6 +59,7 @@ public class HoldemGame {
             case Bet:
             case Raise:
                 this.totalAmount += operation.getAmount();
+                this.progressPlayer.setAmount(this.progressPlayer.getAmount() - operation.getAmount());
                 if (this.pendingPlayers.size() > 0) {
                     Player finishedPlayer = this.progressPlayer;
                     this.progressPlayer = this.pendingPlayers.remove(0);
@@ -65,5 +67,13 @@ public class HoldemGame {
                 }
                 break;
         }
+    }
+
+    public void distributeAmount(List<Player> winners) {
+        double winAmount = this.totalAmount / winners.size();
+        for (Player winner : winners) {
+            winner.setAmount(winner.getAmount() + winAmount);
+        }
+        this.totalAmount = 0;
     }
 }
