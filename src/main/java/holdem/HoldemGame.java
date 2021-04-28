@@ -60,6 +60,8 @@ public class HoldemGame {
     }
 
     public void play(Operation operation) {
+        if (!this.canPlay(operation)) return;
+
         this.operationRecords.add(operation);
         BaseOperation baseOperation = operation.getBaseOperation();
         switch (baseOperation) {
