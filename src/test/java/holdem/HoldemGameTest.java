@@ -47,7 +47,7 @@ public class HoldemGameTest {
         assertEquals(3, game.getPendingPlayers().size());
     }
 
-    @Test public void should_return_90_when_C_and_D_fold_in_first_round_and_second_round() {
+    @Test public void should_return_90_when_D_and_C_fold_in_first_round_and_second_round() {
         List<Player> players = Arrays.asList(
                 new Player("A", 100),
                 new Player("B", 100),
@@ -75,7 +75,7 @@ public class HoldemGameTest {
         assertEquals(1, game.getPendingPlayers().size());
     }
 
-    @Test public void should_return_60_when_B_C_and_D_fold_in_first_round_and_second_round_and_third_round() {
+    @Test public void should_return_60_when_D_C_and_B_fold_in_first_round_and_second_round_and_third_round() {
         List<Player> players = Arrays.asList(
                 new Player("A", 100),
                 new Player("B", 100),
