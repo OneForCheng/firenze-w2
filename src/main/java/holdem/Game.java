@@ -43,40 +43,24 @@ public class Game {
         }
     }
 
-    public void execute(Action action) {
+    public void execute(Action action, int wager) {
         Player activePlayer = awaitingPlayers.poll();
-        action.execute(this, activePlayer);
+        action.execute(this, activePlayer, wager);
         playersTookAction.add(activePlayer);
         nextRound();
     }
 
-    public void bet() {
-        Player activePlayer = awaitingPlayers.poll();
-
-        int currentBid = setCurrentBid(this.getMinWager());
-        betExecute(currentBid, activePlayer, roundWagers.get(activePlayer));
-
-        playersTookAction.add(activePlayer);
-        nextRound();
-    }
-
-    public void raise(int wager) {
-        Player activePlayer = awaitingPlayers.poll();
-
+    public void bet(Player activePlayer, int wager) {
+        int previousWager = roundWagers.get(activePlayer);
         int currentBid = setCurrentBid(wager);
-        raiseExecute(currentBid, activePlayer, roundWagers.get(activePlayer));
-
-        playersTookAction.add(activePlayer);
-        nextRound();
-    }
-
-    private void betExecute(int currentBid, Player activePlayer, int previousWager) {
         putInPot(currentBid - previousWager);
         wage(activePlayer, currentBid);
         awaiting(activePlayer);
     }
 
-    private void raiseExecute(int currentBid, Player activePlayer, int previousWager) {
+    public void raise(Player activePlayer, int wager) {
+        int previousWager = roundWagers.get(activePlayer);
+        int currentBid = setCurrentBid(wager);
         putInPot(currentBid);
         wage(activePlayer, previousWager + currentBid);
         awaiting(activePlayer);
@@ -116,4 +100,5 @@ public class Game {
     public Round getCurrentRound() {
         return this.currentRound;
     }
+
 }
