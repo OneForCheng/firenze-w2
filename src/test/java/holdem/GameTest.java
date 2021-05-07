@@ -18,7 +18,7 @@ public class GameTest  {
     public void player_b_should_be_next_player_if_player_a_pass() {
         Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
 
-        game.pass();
+        game.execute(new Pass());
 
         assertEquals("B", game.getActivePlayer().getName());
         assertEquals(0, game.getPot());
@@ -43,13 +43,13 @@ public class GameTest  {
         assertEquals(Round.PREFLOP, game.getCurrentRound());
 
         assertEquals("A", game.getActivePlayer().getName());
-        game.pass();
+        game.execute(new Pass());
 
         assertEquals("B", game.getActivePlayer().getName());
-        game.pass();
+        game.execute(new Pass());
 
         assertEquals("C", game.getActivePlayer().getName());
-        game.pass();
+        game.execute(new Pass());
 
         assertEquals(Round.FLOP, game.getCurrentRound());
     }
@@ -131,13 +131,13 @@ public class GameTest  {
         assertEquals(Round.PREFLOP, game.getCurrentRound());
 
         assertEquals("A", game.getActivePlayer().getName());
-        game.fold();
+        game.execute(new Fold());
 
         assertEquals("B", game.getActivePlayer().getName());
-        game.pass();
+        game.execute(new Pass());
 
         assertEquals("C", game.getActivePlayer().getName());
-        game.pass();
+        game.execute(new Pass());
 
         assertEquals(Round.FLOP, game.getCurrentRound());
         assertEquals("B", game.getActivePlayer().getName());

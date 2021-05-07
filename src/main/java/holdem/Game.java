@@ -43,16 +43,12 @@ public class Game {
         }
     }
 
-    public void pass() {
+    public void execute(Action action) {
         Player activePlayer = awaitingPlayers.poll();
-
-        passExecute(activePlayer);
-
+        action.execute(this, activePlayer);
         playersTookAction.add(activePlayer);
         nextRound();
     }
-
-
 
     public void bet() {
         Player activePlayer = awaitingPlayers.poll();
@@ -74,19 +70,6 @@ public class Game {
         nextRound();
     }
 
-    public void fold() {
-        Player activePlayer = awaitingPlayers.poll();
-
-        foldExecute(activePlayer);
-
-        playersTookAction.add(activePlayer);
-        nextRound();
-    }
-
-    private void passExecute(Player activePlayer) {
-        awaiting(activePlayer);
-    }
-
     private void betExecute(int currentBid, Player activePlayer, int previousWager) {
         putInPot(currentBid - previousWager);
         wage(activePlayer, currentBid);
@@ -99,7 +82,7 @@ public class Game {
         awaiting(activePlayer);
     }
 
-    private void foldExecute(Player activePlayer) {
+    public void inActive(Player activePlayer) {
         activePlayers.remove(activePlayer);
     }
 
@@ -122,7 +105,7 @@ public class Game {
         roundWagers.put(activePlayer, newWager);
     }
 
-    private void awaiting(Player activePlayer) {
+    public void awaiting(Player activePlayer) {
         awaitingPlayers.offer(activePlayer);
     }
 
