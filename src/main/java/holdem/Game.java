@@ -37,62 +37,80 @@ public class Game {
         return currentBid;
     }
 
-    public void pass() {
-        Player activePlayer = awaitingPlayers.poll();
-        playersTookAction.add(activePlayer);
-        awaitingPlayers.offer(activePlayer);
-
-        nextRound();
-    }
-
     private void nextRound() {
         if (playersTookAction.size() == players.length && activePlayers.stream().allMatch(player -> roundWagers.get(player) == this.currentBid)) {
             this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
         }
     }
 
-    public void bet() {
-        if (this.currentBid < this.getMinWager()) {
-            this.currentBid = this.getMinWager();
-        }
-
+    public void pass() {
         Player activePlayer = awaitingPlayers.poll();
-        this.pot += this.currentBid - roundWagers.get(activePlayer);
 
-        roundWagers.put(activePlayer, this.currentBid);
+        awaiting(activePlayer);
 
         playersTookAction.add(activePlayer);
-        awaitingPlayers.offer(activePlayer);
-
         nextRound();
+    }
+
+    public void bet() {
+        Player activePlayer = awaitingPlayers.poll();
+
+        setCurrentBid(this.getMinWager());
+        putInPot(this.currentBid - roundWagers.get(activePlayer));
+        wage(activePlayer, this.currentBid);
+        awaiting(activePlayer);
+
+        playersTookAction.add(activePlayer);
+        nextRound();
+    }
+
+    public void raise(int wager) {
+        Player activePlayer = awaitingPlayers.poll();
+
+        setCurrentBid(wager);
+        putInPot(this.currentBid);
+        wage(activePlayer, roundWagers.get(activePlayer) + this.currentBid);
+        awaiting(activePlayer);
+
+        playersTookAction.add(activePlayer);
+        nextRound();
+    }
+
+    public void fold() {
+        Player activePlayer = awaitingPlayers.poll();
+
+        activePlayers.remove(activePlayer);
+
+        playersTookAction.add(activePlayer);
+        nextRound();
+    }
+
+    private void setCurrentBid(int wager) {
+        if (wager == this.getMinWager()) {
+            if (this.currentBid < wager)
+                this.currentBid = wager;
+        } else {
+            this.currentBid = wager;
+        }
+    }
+
+    private void putInPot(int bid) {
+        this.pot += bid;
+    }
+
+    private void wage(Player activePlayer, int newWager) {
+        roundWagers.put(activePlayer, newWager);
+    }
+
+    private void awaiting(Player activePlayer) {
+        awaitingPlayers.offer(activePlayer);
     }
 
     public int getMinWager() {
         return 1;
     }
 
-    public void raise(int wager) {
-        this.currentBid = wager;
-        this.pot += this.currentBid;
-
-        Player activePlayer = awaitingPlayers.poll();
-        roundWagers.put(activePlayer, roundWagers.get(activePlayer) + this.currentBid);
-
-        playersTookAction.add(activePlayer);
-        awaitingPlayers.offer(activePlayer);
-
-        nextRound();
-    }
-
     public Round getCurrentRound() {
         return this.currentRound;
-    }
-
-    public void fold() {
-        Player activePlayer = awaitingPlayers.poll();
-        playersTookAction.add(activePlayer);
-        activePlayers.remove(activePlayer);
-
-        nextRound();
     }
 }
