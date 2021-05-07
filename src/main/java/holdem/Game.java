@@ -46,19 +46,19 @@ public class Game {
     public void pass() {
         Player activePlayer = awaitingPlayers.poll();
 
-        awaiting(activePlayer);
+        passExecute(activePlayer);
 
         playersTookAction.add(activePlayer);
         nextRound();
     }
 
+
+
     public void bet() {
         Player activePlayer = awaitingPlayers.poll();
 
-        setCurrentBid(this.getMinWager());
-        putInPot(this.currentBid - roundWagers.get(activePlayer));
-        wage(activePlayer, this.currentBid);
-        awaiting(activePlayer);
+        int currentBid = setCurrentBid(this.getMinWager());
+        betExecute(currentBid, activePlayer, roundWagers.get(activePlayer));
 
         playersTookAction.add(activePlayer);
         nextRound();
@@ -67,10 +67,8 @@ public class Game {
     public void raise(int wager) {
         Player activePlayer = awaitingPlayers.poll();
 
-        setCurrentBid(wager);
-        putInPot(this.currentBid);
-        wage(activePlayer, roundWagers.get(activePlayer) + this.currentBid);
-        awaiting(activePlayer);
+        int currentBid = setCurrentBid(wager);
+        raiseExecute(currentBid, activePlayer, roundWagers.get(activePlayer));
 
         playersTookAction.add(activePlayer);
         nextRound();
@@ -79,19 +77,41 @@ public class Game {
     public void fold() {
         Player activePlayer = awaitingPlayers.poll();
 
-        activePlayers.remove(activePlayer);
+        foldExecute(activePlayer);
 
         playersTookAction.add(activePlayer);
         nextRound();
     }
 
-    private void setCurrentBid(int wager) {
+    private void passExecute(Player activePlayer) {
+        awaiting(activePlayer);
+    }
+
+    private void betExecute(int currentBid, Player activePlayer, int previousWager) {
+        putInPot(currentBid - previousWager);
+        wage(activePlayer, currentBid);
+        awaiting(activePlayer);
+    }
+
+    private void raiseExecute(int currentBid, Player activePlayer, int previousWager) {
+        putInPot(currentBid);
+        wage(activePlayer, previousWager + currentBid);
+        awaiting(activePlayer);
+    }
+
+    private void foldExecute(Player activePlayer) {
+        activePlayers.remove(activePlayer);
+    }
+
+    private int setCurrentBid(int wager) {
         if (wager == this.getMinWager()) {
             if (this.currentBid < wager)
                 this.currentBid = wager;
         } else {
             this.currentBid = wager;
         }
+
+        return this.currentBid;
     }
 
     private void putInPot(int bid) {
