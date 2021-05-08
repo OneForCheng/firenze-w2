@@ -29,7 +29,7 @@ public class GameTest  {
     public void should_set_current_bid_to_min_wager_when_player_a_bet() {
         Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
 
-        game.execute(new Bet(game.getMinWager()));
+        game.execute(new Bet());
 
         assertEquals("B", game.getActivePlayer().getName());
         assertEquals(1, game.getPot());
@@ -61,13 +61,13 @@ public class GameTest  {
         assertEquals(Round.PREFLOP, game.getCurrentRound());
 
         assertEquals("A", game.getActivePlayer().getName());
-        game.execute(new Bet(game.getMinWager()));
+        game.execute(new Bet());
 
         assertEquals("B", game.getActivePlayer().getName());
-        game.execute(new Bet(game.getMinWager()));
+        game.execute(new Bet());
 
         assertEquals("C", game.getActivePlayer().getName());
-        game.execute(new Bet(game.getMinWager()));
+        game.execute(new Bet());
 
         assertEquals(Round.FLOP, game.getCurrentRound());
     }
@@ -79,10 +79,10 @@ public class GameTest  {
         assertEquals(Round.PREFLOP, game.getCurrentRound());
 
         assertEquals("A", game.getActivePlayer().getName());
-        game.execute(new Bet(game.getMinWager()));
+        game.execute(new Bet());
 
         assertEquals("B", game.getActivePlayer().getName());
-        game.execute(new Bet(game.getMinWager()));
+        game.execute(new Bet());
 
         assertEquals("C", game.getActivePlayer().getName());
         game.execute(new Raise(2));
@@ -100,11 +100,11 @@ public class GameTest  {
         assertEquals(Round.PREFLOP, game.getCurrentRound());
 
         assertEquals("A", game.getActivePlayer().getName());
-        game.execute(new Bet(game.getMinWager()));
+        game.execute(new Bet());
         int playWager = game.getCurrentBid();
 
         assertEquals("B", game.getActivePlayer().getName());
-        game.execute(new Bet(game.getMinWager()));
+        game.execute(new Bet());
 
         assertEquals("C", game.getActivePlayer().getName());
         game.execute(new Raise(3));
@@ -113,12 +113,12 @@ public class GameTest  {
         int pot = game.getPot();
 
         assertEquals("A", game.getActivePlayer().getName());
-        game.execute(new Bet(game.getMinWager()));
+        game.execute(new Bet());
 
         assertEquals(game.getCurrentBid() - playWager, game.getPot() - pot);
 
         assertEquals("B", game.getActivePlayer().getName());
-        game.execute(new Bet(game.getMinWager()));
+        game.execute(new Bet());
 
         assertEquals(Round.FLOP, game.getCurrentRound());
     }

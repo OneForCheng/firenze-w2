@@ -50,9 +50,9 @@ public class Game {
         nextRound();
     }
 
-    public void bet(Player activePlayer, int wager) {
+    public void bet(Player activePlayer) {
         int previousWager = roundWagers.get(activePlayer);
-        int currentBid = setCurrentBid(wager);
+        int currentBid = setCurrentBid(getMinWager());
         putInPot(currentBid - previousWager);
         wage(activePlayer, currentBid);
         awaiting(activePlayer);
