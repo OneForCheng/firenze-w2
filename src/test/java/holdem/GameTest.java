@@ -44,7 +44,7 @@ public class GameTest  {
     public void should_enter_next_round_if_all_players_pass() {
         Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
 
-        assertEquals(Round.PREFLOP, game.getCurrentRound());
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
 
         assertEquals("A", game.getActivePlayer().getName());
         game.execute(new Pass());
@@ -62,7 +62,7 @@ public class GameTest  {
     public void should_enter_next_round_if_all_players_bet() {
         Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
 
-        assertEquals(Round.PREFLOP, game.getCurrentRound());
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
 
         assertEquals("A", game.getActivePlayer().getName());
         game.execute(new Bet());
@@ -80,7 +80,7 @@ public class GameTest  {
     public void should_not_entry_next_round_if_anyone_raise() {
         Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
 
-        assertEquals(Round.PREFLOP, game.getCurrentRound());
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
 
         assertEquals("A", game.getActivePlayer().getName());
         game.execute(new Bet());
@@ -91,7 +91,7 @@ public class GameTest  {
         assertEquals("C", game.getActivePlayer().getName());
         game.execute(new Raise(2));
 
-        assertEquals(Round.PREFLOP, game.getCurrentRound());
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
         assertEquals("A", game.getActivePlayer().getName());
         assertEquals(4, game.getPot());
         assertEquals(2, game.getCurrentBid());
@@ -101,7 +101,7 @@ public class GameTest  {
     public void should_call_to_previous_bet_after_someone_raise_the_wager() {
         Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
 
-        assertEquals(Round.PREFLOP, game.getCurrentRound());
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
 
         assertEquals("A", game.getActivePlayer().getName());
         game.execute(new Bet());
@@ -132,7 +132,7 @@ public class GameTest  {
     public void should_enter_next_round_if_all_players_fold_or_pass() {
         Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
 
-        assertEquals(Round.PREFLOP, game.getCurrentRound());
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
 
         assertEquals("A", game.getActivePlayer().getName());
         game.execute(new Fold());

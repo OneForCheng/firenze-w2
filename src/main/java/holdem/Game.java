@@ -10,14 +10,14 @@ public class Game {
     private int currentBid;
     private int pot;
     private Queue<Player> awaitingPlayers;
-    private Player[] players;
+    private List<Player> players;
 
     public Game(Player... players) {
-        this.players = players;
-        this.awaitingPlayers = new LinkedList<>(Arrays.asList(players));
+        this.players = Arrays.asList(players);
+        this.awaitingPlayers = new LinkedList<>(this.players);
         this.pot = 0;
         this.currentBid = 0;
-        this.currentRound = Round.PREFLOP;
+        this.currentRound = Round.PRE_FLOP;
     }
 
     public Player getActivePlayer() {
@@ -72,7 +72,7 @@ public class Game {
     }
 
     private void nextRound() {
-        List<Player> activePlayers = Arrays.stream(this.players).filter(Player::isActive).collect(Collectors.toList());
+        List<Player> activePlayers = this.players.stream().filter(Player::isActive).collect(Collectors.toList());
 
         if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getPreviousWager() == this.currentBid)) {
             this.currentRound = Round.values()[this.currentRound.ordinal() + 1];

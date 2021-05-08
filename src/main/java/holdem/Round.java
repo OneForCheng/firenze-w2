@@ -1,6 +1,6 @@
 package holdem;
 
 public enum Round {
-    PREFLOP,
+    PRE_FLOP,
     FLOP
 }
