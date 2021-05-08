@@ -1,4 +1,7 @@
-package holdem;
+package holdem.action;
+
+import holdem.Game;
+import holdem.Player;
 
 public class Fold implements Action {
     @Override

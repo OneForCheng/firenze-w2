@@ -1,10 +1,13 @@
-package holdem;
+package holdem.action;
+
+import holdem.Game;
+import holdem.Player;
 
 public class Raise implements Action {
 
     private final int wager;
 
-    Raise(int wager) {
+    public Raise(int wager) {
         this.wager = wager;
     }
 
