@@ -25,20 +25,19 @@ public class Game {
     }
 
     public int getPot() {
-        return pot;
+        return this.pot;
     }
 
     public int getCurrentBid() {
-        return currentBid;
+        return this.currentBid;
     }
 
-    private void nextRound() {
-        List<Player> activePlayers = Arrays.stream(this.players).filter(Player::isActive).collect(Collectors.toList());
+    public int getMinWager() {
+        return 1;
+    }
 
-        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getPreviousWager() == this.currentBid)) {
-            this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
-            activePlayers.stream().forEach(player -> player.setTookAction(false));
-        }
+    public Round getCurrentRound() {
+        return this.currentRound;
     }
 
     public void execute(Action action) {
@@ -52,7 +51,7 @@ public class Game {
         int previousWager = activePlayer.getPreviousWager();
         int currentBid = setCurrentBid(getMinWager());
         putInPot(currentBid - previousWager);
-        activePlayer.setPreviousWager(currentBid);
+        wage(activePlayer, currentBid);
         awaiting(activePlayer);
     }
 
@@ -60,7 +59,7 @@ public class Game {
         int previousWager = activePlayer.getPreviousWager();
         int currentBid = setCurrentBid(wager);
         putInPot(currentBid);
-        activePlayer.setPreviousWager(previousWager + currentBid);
+        wage(activePlayer, previousWager + currentBid);
         awaiting(activePlayer);
     }
 
@@ -68,8 +67,22 @@ public class Game {
         activePlayer.inActive();
     }
 
+    public void awaiting(Player activePlayer) {
+        awaitingPlayers.offer(activePlayer);
+    }
+
+    private void nextRound() {
+        List<Player> activePlayers = Arrays.stream(this.players).filter(Player::isActive).collect(Collectors.toList());
+
+        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getPreviousWager() == this.currentBid)) {
+            this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
+            activePlayers.stream().forEach(player -> player.setTookAction(false));
+        }
+    }
+
     private int setCurrentBid(int wager) {
-        if (wager == this.getMinWager()) {
+        boolean isMinWager = wager == this.getMinWager();
+        if (isMinWager) {
             if (this.currentBid < wager)
                 this.currentBid = wager;
         } else {
@@ -79,20 +92,12 @@ public class Game {
         return this.currentBid;
     }
 
+    private void wage(Player activePlayer, int currentBid) {
+        activePlayer.setPreviousWager(currentBid);
+    }
+
     private void putInPot(int bid) {
         this.pot += bid;
-    }
-
-    public void awaiting(Player activePlayer) {
-        awaitingPlayers.offer(activePlayer);
-    }
-
-    public int getMinWager() {
-        return 1;
-    }
-
-    public Round getCurrentRound() {
-        return this.currentRound;
     }
 
 }
