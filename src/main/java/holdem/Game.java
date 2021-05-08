@@ -47,24 +47,12 @@ public class Game {
         nextRound();
     }
 
-    public void bet(Player activePlayer) {
-        int previousWager = activePlayer.getPreviousWager();
-        int currentBid = setCurrentBid(getMinWager());
-        putInPot(currentBid - previousWager);
-        wage(activePlayer, currentBid);
-        awaiting(activePlayer);
-    }
-
     public void raise(Player activePlayer, int wager) {
         int previousWager = activePlayer.getPreviousWager();
         int currentBid = setCurrentBid(wager);
         putInPot(currentBid);
         wage(activePlayer, previousWager + currentBid);
         awaiting(activePlayer);
-    }
-
-    public void inActive(Player activePlayer) {
-        activePlayer.inActive();
     }
 
     public void awaiting(Player activePlayer) {
@@ -80,7 +68,7 @@ public class Game {
         }
     }
 
-    private int setCurrentBid(int wager) {
+    public int setCurrentBid(int wager) {
         boolean isMinWager = wager == this.getMinWager();
         if (isMinWager) {
             if (this.currentBid < wager)
@@ -96,7 +84,7 @@ public class Game {
         activePlayer.setPreviousWager(currentBid);
     }
 
-    private void putInPot(int bid) {
+    public void putInPot(int bid) {
         this.pot += bid;
     }
 
