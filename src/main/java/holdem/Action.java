@@ -1,5 +1,5 @@
 package holdem;
 
 public interface Action {
-    void execute(Game game, Player activePlayer, int wager);
+    void execute(Game game, Player activePlayer);
 }

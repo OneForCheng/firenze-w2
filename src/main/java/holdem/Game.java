@@ -43,9 +43,9 @@ public class Game {
         }
     }
 
-    public void execute(Action action, int wager) {
+    public void execute(Action action) {
         Player activePlayer = awaitingPlayers.poll();
-        action.execute(this, activePlayer, wager);
+        action.execute(this, activePlayer);
         playersTookAction.add(activePlayer);
         nextRound();
     }
