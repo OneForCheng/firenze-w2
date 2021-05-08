@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 public class Game {
     private Round currentRound;
-    private HashSet<Player> playersTookAction;
     private int currentBid;
     private int pot;
     private Queue<Player> awaitingPlayers;
@@ -20,7 +19,6 @@ public class Game {
         this.awaitingPlayers = new LinkedList<>(Arrays.asList(players));
         this.pot = 0;
         this.currentBid = 0;
-        this.playersTookAction = new HashSet<>();
         this.currentRound = Round.PREFLOP;
         this.roundWagers = Arrays.stream(players).collect(Collectors.toMap(Function.identity(), player -> 0));
     }
@@ -38,15 +36,18 @@ public class Game {
     }
 
     private void nextRound() {
-        if (playersTookAction.size() == players.length && Arrays.stream(this.players).filter(Player::isActive).allMatch(player -> roundWagers.get(player) == this.currentBid)) {
+        List<Player> activePlayers = Arrays.stream(this.players).filter(Player::isActive).collect(Collectors.toList());
+
+        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> roundWagers.get(player) == this.currentBid)) {
             this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
+            activePlayers.stream().forEach(player -> player.setTookAction(false));
         }
     }
 
     public void execute(Action action) {
         Player activePlayer = awaitingPlayers.poll();
         action.execute(this, activePlayer);
-        playersTookAction.add(activePlayer);
+        activePlayer.setTookAction(true);
         nextRound();
     }
 
