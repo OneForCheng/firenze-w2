@@ -3,7 +3,6 @@ package holdem;
 import holdem.action.Action;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Game {
@@ -12,7 +11,6 @@ public class Game {
     private int pot;
     private Queue<Player> awaitingPlayers;
     private Player[] players;
-    private Map<Player, Integer> roundWagers;
 
     public Game(Player... players) {
         this.players = players;
@@ -20,7 +18,6 @@ public class Game {
         this.pot = 0;
         this.currentBid = 0;
         this.currentRound = Round.PREFLOP;
-        this.roundWagers = Arrays.stream(players).collect(Collectors.toMap(Function.identity(), player -> 0));
     }
 
     public Player getActivePlayer() {
@@ -38,7 +35,7 @@ public class Game {
     private void nextRound() {
         List<Player> activePlayers = Arrays.stream(this.players).filter(Player::isActive).collect(Collectors.toList());
 
-        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> roundWagers.get(player) == this.currentBid)) {
+        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getPreviousWager() == this.currentBid)) {
             this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
             activePlayers.stream().forEach(player -> player.setTookAction(false));
         }
@@ -52,18 +49,18 @@ public class Game {
     }
 
     public void bet(Player activePlayer) {
-        int previousWager = roundWagers.get(activePlayer);
+        int previousWager = activePlayer.getPreviousWager();
         int currentBid = setCurrentBid(getMinWager());
         putInPot(currentBid - previousWager);
-        wage(activePlayer, currentBid);
+        activePlayer.setPreviousWager(currentBid);
         awaiting(activePlayer);
     }
 
     public void raise(Player activePlayer, int wager) {
-        int previousWager = roundWagers.get(activePlayer);
+        int previousWager = activePlayer.getPreviousWager();
         int currentBid = setCurrentBid(wager);
         putInPot(currentBid);
-        wage(activePlayer, previousWager + currentBid);
+        activePlayer.setPreviousWager(previousWager + currentBid);
         awaiting(activePlayer);
     }
 
@@ -84,10 +81,6 @@ public class Game {
 
     private void putInPot(int bid) {
         this.pot += bid;
-    }
-
-    private void wage(Player activePlayer, int newWager) {
-        roundWagers.put(activePlayer, newWager);
     }
 
     public void awaiting(Player activePlayer) {
