@@ -1,7 +1,7 @@
 package holdem.model;
 
-import java.util.Arrays;
-import java.util.LinkedList;
+import holdem.util.CardHelper;
+
 import java.util.Queue;
 
 public class CardGroup {
@@ -9,10 +9,7 @@ public class CardGroup {
     private final Queue<Card> remainCards;
 
     public CardGroup() {
-        this.remainCards = new LinkedList<>();
-        Arrays.stream(new int[52]).forEach(i -> {
-            remainCards.add(new Card());
-        });
+        this.remainCards = CardHelper.generate52ShuffledCards();
     }
 
     public Card giveOut() {
