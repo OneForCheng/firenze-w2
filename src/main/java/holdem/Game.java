@@ -3,6 +3,7 @@ package holdem;
 import holdem.action.Action;
 import holdem.constant.Round;
 import holdem.model.Card;
+import holdem.model.CardGroup;
 import holdem.model.Player;
 
 import java.util.*;
@@ -17,6 +18,7 @@ public class Game {
     private List<Player> players;
     private Map<Player, Card[]> playerHoleCards;
     private Queue<Card> commonCards;
+    private CardGroup cardGroup;
 
     public Game(Player... players) {
         this.players = Arrays.asList(players);
@@ -24,9 +26,10 @@ public class Game {
         this.pot = 0;
         this.currentBid = 0;
         this.currentRound = Round.PRE_FLOP;
+        this.cardGroup = new CardGroup();
         this.playerHoleCards = Arrays.stream(players).collect(Collectors.toMap(Function.identity(), player -> new Card[]{
-                new Card(),
-                new Card(),
+                this.cardGroup.giveOut(),
+                this.cardGroup.giveOut(),
         }));
         commonCards = new LinkedList<>();
     }
@@ -80,11 +83,11 @@ public class Game {
 
     private void addCommonCard() {
         if (this.currentRound == Round.FLOP) {
-            this.commonCards.add(new Card());
-            this.commonCards.add(new Card());
-            this.commonCards.add(new Card());
+            this.commonCards.add(this.cardGroup.giveOut());
+            this.commonCards.add(this.cardGroup.giveOut());
+            this.commonCards.add(this.cardGroup.giveOut());
         } else if (this.currentRound == Round.TURN || this.currentRound == Round.RIVER) {
-            this.commonCards.add(new Card());
+            this.commonCards.add(this.cardGroup.giveOut());
         }
     }
 
