@@ -1,4 +1,4 @@
-package holdem;
+package holdem.constant;
 
 public enum Round {
     PRE_FLOP,
