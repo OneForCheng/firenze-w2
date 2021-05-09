@@ -60,10 +60,19 @@ public class Game {
         }
     }
 
-    public void setCurrentBid(int wager) {
-        if (wager > this.getMinWager()) {
-            this.currentBid = wager;
-        } else if (this.currentBid < wager) {
+    public void setCurrentBidForBet() {
+        int minWager = this.getMinWager();
+        if (this.currentBid < minWager) {
+            this.currentBid = minWager;
+        }
+    }
+
+    public void setCurrentBidForRaise(int wager) {
+        this.currentBid = wager;
+    }
+
+    public void setCurrentBidForAllIn(int wager) {
+        if (wager >= this.getMinWager() && wager >= this.currentBid) {
             this.currentBid = wager;
         }
     }

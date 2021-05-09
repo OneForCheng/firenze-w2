@@ -13,7 +13,7 @@ public class Raise implements Action {
 
     @Override
     public void execute(Game game, Player activePlayer) {
-        game.setCurrentBid(this.wager);
+        game.setCurrentBidForRaise(this.wager);
 
         int currentBid = game.getCurrentBid();
         game.putInPot(currentBid);

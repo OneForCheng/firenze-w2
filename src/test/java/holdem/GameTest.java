@@ -1,9 +1,6 @@
 package holdem;
 
-import holdem.action.Bet;
-import holdem.action.Fold;
-import holdem.action.Pass;
-import holdem.action.Raise;
+import holdem.action.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -189,5 +186,21 @@ public class GameTest  {
         game.execute(new Pass());
 
         assertEquals(Round.RIVER, game.getCurrentRound());
+    }
+
+    @Test
+    public void should_enter_next_round_if_player_a_all_in_and_other_players_bet() {
+        Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
+
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
+
+        game.execute(new AllIn(6));
+        game.execute(new Bet());
+        game.execute(new Bet());
+
+        assertEquals(Round.FLOP, game.getCurrentRound());
+        assertEquals("B", game.getActivePlayer().getName());
+        assertEquals(18, game.getPot());
+        assertEquals(6, game.getCurrentBid());
     }
 }
