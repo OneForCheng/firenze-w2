@@ -40,6 +40,10 @@ public class Game {
         return this.currentRound;
     }
 
+    public List<Player> getAllInPlayers() {
+        return players.stream().filter(Player::isAllIn).collect(Collectors.toList());
+    }
+
     public void execute(Action action) {
         Player activePlayer = awaitingPlayers.poll();
         action.execute(this, activePlayer);
@@ -80,5 +84,4 @@ public class Game {
     public void putInPot(int bid) {
         this.pot += bid;
     }
-
 }

@@ -3,6 +3,7 @@ package holdem;
 public class Player {
     private boolean isActive;
     private boolean isTookAction;
+    private boolean isAllIn;
     private int previousWager;
     private String name;
 
@@ -10,6 +11,7 @@ public class Player {
         this.name = name;
         this.isActive = true;
         this.isTookAction = false;
+        this.isAllIn = false;
         this.previousWager = 0;
     }
 
@@ -39,5 +41,13 @@ public class Player {
 
     public void setPreviousWager(int wager) {
         this.previousWager = wager;
+    }
+
+    public void allIn() {
+        this.isAllIn = true;
+    }
+
+    public boolean isAllIn() {
+        return this.isAllIn;
     }
 }

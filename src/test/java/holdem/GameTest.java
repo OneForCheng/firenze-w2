@@ -202,5 +202,6 @@ public class GameTest  {
         assertEquals("B", game.getActivePlayer().getName());
         assertEquals(18, game.getPot());
         assertEquals(6, game.getCurrentBid());
+        assertEquals("A", game.getAllInPlayers().get(0).getName());
     }
 }

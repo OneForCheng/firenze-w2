@@ -16,6 +16,7 @@ public class AllIn implements Action {
 
         game.putInPot(this.wager);
 
+        activePlayer.allIn();
         activePlayer.inActive();
     }
 }
