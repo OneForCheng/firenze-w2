@@ -146,4 +146,48 @@ public class GameTest  {
         assertEquals(Round.FLOP, game.getCurrentRound());
         assertEquals("B", game.getActivePlayer().getName());
     }
+
+    @Test
+    public void should_enter_third_round_if_all_players_pass_in_previous_two_round() {
+        Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
+
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.FLOP, game.getCurrentRound());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.TURN, game.getCurrentRound());
+    }
+
+    @Test
+    public void should_enter_forth_round_if_all_players_pass_in_previous_three_round() {
+        Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
+
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.FLOP, game.getCurrentRound());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.TURN, game.getCurrentRound());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.RIVER, game.getCurrentRound());
+    }
 }
