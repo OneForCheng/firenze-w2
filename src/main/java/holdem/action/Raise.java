@@ -13,6 +13,12 @@ public class Raise implements Action {
 
     @Override
     public void execute(Game game, Player activePlayer) {
-        game.raise(activePlayer, this.wager);
+        int previousWager = activePlayer.getPreviousWager();
+        int currentBid = game.setCurrentBid(this.wager);
+
+        game.putInPot(currentBid);
+        game.awaiting(activePlayer);
+
+        activePlayer.setPreviousWager(previousWager + currentBid);
     }
 }

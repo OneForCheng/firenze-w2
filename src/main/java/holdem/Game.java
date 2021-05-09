@@ -47,14 +47,6 @@ public class Game {
         nextRound();
     }
 
-    public void raise(Player activePlayer, int wager) {
-        int previousWager = activePlayer.getPreviousWager();
-        int currentBid = setCurrentBid(wager);
-        putInPot(currentBid);
-        wage(activePlayer, previousWager + currentBid);
-        awaiting(activePlayer);
-    }
-
     public void awaiting(Player activePlayer) {
         awaitingPlayers.offer(activePlayer);
     }
@@ -78,10 +70,6 @@ public class Game {
         }
 
         return this.currentBid;
-    }
-
-    private void wage(Player activePlayer, int currentBid) {
-        activePlayer.setPreviousWager(currentBid);
     }
 
     public void putInPot(int bid) {
