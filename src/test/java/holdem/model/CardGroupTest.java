@@ -2,7 +2,7 @@ package holdem.model;
 
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +24,7 @@ public class CardGroupTest {
     @Test
     public void should_remain_0_cards_if_give_out_more_than_52_cards() {
         CardGroup cardGroup = new CardGroup();
-        Arrays.stream(new int[52]).forEach(i -> {
+        IntStream.range(0, 52).forEach(i -> {
             cardGroup.giveOut();
         });
         assertEquals(0, cardGroup.getRemainCards().size());
