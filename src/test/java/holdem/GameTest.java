@@ -14,6 +14,7 @@ public class GameTest  {
         assertEquals(0, game.getPot());
         assertEquals(1, game.getMinWager());
         assertEquals(0, game.getCurrentBid());
+        assertEquals(false, game.isOver());
     }
 
     @Test
@@ -25,6 +26,7 @@ public class GameTest  {
         assertEquals("B", game.getActivePlayer().getName());
         assertEquals(0, game.getPot());
         assertEquals(0, game.getCurrentBid());
+        assertEquals(false, game.isOver());
     }
 
     @Test
@@ -36,6 +38,7 @@ public class GameTest  {
         assertEquals("B", game.getActivePlayer().getName());
         assertEquals(1, game.getPot());
         assertEquals(1, game.getCurrentBid());
+        assertEquals(false, game.isOver());
     }
 
     @Test
@@ -54,6 +57,7 @@ public class GameTest  {
         game.execute(new Pass());
 
         assertEquals(Round.FLOP, game.getCurrentRound());
+        assertEquals(false, game.isOver());
     }
 
     @Test
@@ -72,6 +76,7 @@ public class GameTest  {
         game.execute(new Bet());
 
         assertEquals(Round.FLOP, game.getCurrentRound());
+        assertEquals(false, game.isOver());
     }
 
     @Test
@@ -93,6 +98,7 @@ public class GameTest  {
         assertEquals("A", game.getActivePlayer().getName());
         assertEquals(4, game.getPot());
         assertEquals(2, game.getCurrentBid());
+        assertEquals(false, game.isOver());
     }
 
     @Test
@@ -123,6 +129,7 @@ public class GameTest  {
         game.execute(new Bet());
 
         assertEquals(Round.FLOP, game.getCurrentRound());
+        assertEquals(false, game.isOver());
     }
 
 
@@ -143,6 +150,7 @@ public class GameTest  {
 
         assertEquals(Round.FLOP, game.getCurrentRound());
         assertEquals("B", game.getActivePlayer().getName());
+        assertEquals(false, game.isOver());
     }
 
     @Test
@@ -162,6 +170,7 @@ public class GameTest  {
         game.execute(new Pass());
 
         assertEquals(Round.TURN, game.getCurrentRound());
+        assertEquals(false, game.isOver());
     }
 
     @Test
@@ -187,6 +196,7 @@ public class GameTest  {
         game.execute(new Pass());
 
         assertEquals(Round.RIVER, game.getCurrentRound());
+        assertEquals(false, game.isOver());
     }
 
     @Test
@@ -204,5 +214,49 @@ public class GameTest  {
         assertEquals(18, game.getPot());
         assertEquals(6, game.getCurrentBid());
         assertEquals("A", game.getAllInPlayers().get(0).getName());
+        assertEquals(false, game.isOver());
+    }
+
+    @Test
+    public void should_game_over_if_there_is_only_one_active_player_in_first_round() {
+        Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
+
+        game.execute(new Fold());
+        game.execute(new Fold());
+
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
+        assertEquals("C", game.getActivePlayer().getName());
+        assertEquals(true, game.isOver());
+    }
+
+    @Test
+    public void should_game_over_if_game_enter_showdown_round() {
+        Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
+
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.FLOP, game.getCurrentRound());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.TURN, game.getCurrentRound());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.RIVER, game.getCurrentRound());
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.SHOWDOWN, game.getCurrentRound());
+        assertEquals(true, game.isOver());
     }
 }

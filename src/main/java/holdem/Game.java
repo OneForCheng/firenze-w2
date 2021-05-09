@@ -85,4 +85,9 @@ public class Game {
     public void putInPot(int bid) {
         this.pot += bid;
     }
+
+    public boolean isOver() {
+        List<Player> activePlayers = this.players.stream().filter(Player::isActive).collect(Collectors.toList());;
+        return activePlayers.size() == 1 || this.getCurrentRound() == Round.SHOWDOWN;
+    }
 }
