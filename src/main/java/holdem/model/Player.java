@@ -1,4 +1,4 @@
-package holdem;
+package holdem.model;
 
 public class Player {
     private boolean isActive;

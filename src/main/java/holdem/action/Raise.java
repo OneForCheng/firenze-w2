@@ -1,7 +1,7 @@
 package holdem.action;
 
 import holdem.Game;
-import holdem.Player;
+import holdem.model.Player;
 
 public class Raise implements Action {
 

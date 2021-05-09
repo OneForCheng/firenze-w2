@@ -2,6 +2,7 @@ package holdem;
 
 import holdem.action.*;
 import holdem.constant.Round;
+import holdem.model.Player;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
