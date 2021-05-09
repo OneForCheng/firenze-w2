@@ -1,6 +1,6 @@
-package holdem.model;
+package holdem.models;
 
-import holdem.constant.Suit;
+import holdem.enums.Suit;
 
 public class Card {
     private int number;

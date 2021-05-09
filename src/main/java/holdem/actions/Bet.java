@@ -1,7 +1,7 @@
-package holdem.action;
+package holdem.actions;
 
 import holdem.Game;
-import holdem.model.Player;
+import holdem.models.Player;
 
 public class Bet implements Action {
     @Override

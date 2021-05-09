@@ -1,6 +1,6 @@
-package holdem.model;
+package holdem.models;
 
-import holdem.util.CardGroupHelper;
+import holdem.utils.CardGroupHelper;
 
 import java.util.Queue;
 

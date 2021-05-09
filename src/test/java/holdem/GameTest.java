@@ -1,8 +1,8 @@
 package holdem;
 
-import holdem.action.*;
-import holdem.constant.Round;
-import holdem.model.Player;
+import holdem.actions.*;
+import holdem.enums.Round;
+import holdem.models.Player;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

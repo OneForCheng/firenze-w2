@@ -1,4 +1,4 @@
-package holdem.model;
+package holdem.models;
 
 import org.junit.Test;
 

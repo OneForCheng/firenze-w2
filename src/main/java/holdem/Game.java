@@ -1,10 +1,10 @@
 package holdem;
 
-import holdem.action.Action;
-import holdem.constant.Round;
-import holdem.model.Card;
-import holdem.model.CardGroup;
-import holdem.model.Player;
+import holdem.actions.Action;
+import holdem.enums.Round;
+import holdem.models.Card;
+import holdem.models.CardGroup;
+import holdem.models.Player;
 
 import java.util.*;
 import java.util.function.Function;

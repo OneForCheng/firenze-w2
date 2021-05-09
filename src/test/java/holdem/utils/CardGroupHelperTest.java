@@ -1,7 +1,7 @@
-package holdem.util;
+package holdem.utils;
 
-import holdem.constant.Suit;
-import holdem.model.Card;
+import holdem.enums.Suit;
+import holdem.models.Card;
 import org.junit.Test;
 
 import java.util.*;
