@@ -1,6 +1,6 @@
 package holdem.model;
 
-import holdem.util.CardHelper;
+import holdem.util.CardGroupHelper;
 
 import java.util.Queue;
 
@@ -9,7 +9,7 @@ public class CardGroup {
     private final Queue<Card> remainCards;
 
     public CardGroup() {
-        this.remainCards = CardHelper.generate52ShuffledCards();
+        this.remainCards = CardGroupHelper.generate52ShuffledCards();
     }
 
     public Card giveOut() {
