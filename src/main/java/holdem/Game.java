@@ -46,10 +46,12 @@ public class Game {
     }
 
     public void execute(Action action) {
-        Player activePlayer = awaitingPlayers.poll();
-        action.execute(this, activePlayer);
-        activePlayer.setTookAction(true);
-        nextRound();
+        if (!this.isOver()) {
+            Player activePlayer = awaitingPlayers.poll();
+            action.execute(this, activePlayer);
+            activePlayer.setTookAction(true);
+            nextRound();
+        }
     }
 
     public void awaiting(Player activePlayer) {
