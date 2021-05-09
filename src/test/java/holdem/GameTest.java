@@ -262,15 +262,20 @@ public class GameTest  {
     }
 
     @Test
-    public void should_give_two_hand_card_for_every_player() {
+    public void should_give_two_hole_card_for_every_player_when_the_game_start() {
         Player playerA = new Player("A");
         Player playerB = new Player("B");
         Player playerC = new Player("C");
+
+        assertNull(playerA.getHoleCards());
+        assertNull(playerB.getHoleCards());
+        assertNull(playerC.getHoleCards());
+
         Game game = new Game(playerA, playerB, playerC);
 
-        assertEquals(2, game.getPlayerHoleCards(playerA).length);
-        assertEquals(2, game.getPlayerHoleCards(playerB).length);
-        assertEquals(2, game.getPlayerHoleCards(playerC).length);
+        assertEquals(2, playerA.getHoleCards().length);
+        assertEquals(2, playerB.getHoleCards().length);
+        assertEquals(2, playerC.getHoleCards().length);
     }
 
     @Test

@@ -7,7 +7,6 @@ import holdem.models.CardGroup;
 import holdem.models.Player;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Game {
@@ -16,7 +15,6 @@ public class Game {
     private int pot;
     private Queue<Player> awaitingPlayers;
     private List<Player> players;
-    private Map<Player, Card[]> playerHoleCards;
     private Queue<Card> commonCards;
     private CardGroup cardGroup;
 
@@ -27,11 +25,15 @@ public class Game {
         this.currentBid = 0;
         this.currentRound = Round.PRE_FLOP;
         this.cardGroup = new CardGroup();
-        this.playerHoleCards = Arrays.stream(players).collect(Collectors.toMap(Function.identity(), player -> new Card[]{
-                this.cardGroup.giveOut(),
-                this.cardGroup.giveOut(),
+        this.commonCards = new LinkedList<>();
+        this.giveOutHoleCardsToPlayers(this.players, this.cardGroup);
+    }
+
+    private void giveOutHoleCardsToPlayers(List<Player> players, CardGroup cardGroup) {
+        players.forEach(player -> player.setHoleCards(new Card[]{
+                cardGroup.giveOut(),
+                cardGroup.giveOut(),
         }));
-        commonCards = new LinkedList<>();
     }
 
     public Player getActivePlayer() {
@@ -115,10 +117,6 @@ public class Game {
     public boolean isOver() {
         List<Player> activePlayers = this.players.stream().filter(Player::isActive).collect(Collectors.toList());;
         return activePlayers.size() == 1 || this.getCurrentRound() == Round.SHOWDOWN;
-    }
-
-    public Card[] getPlayerHoleCards(Player player) {
-        return this.playerHoleCards.get(player);
     }
 
     public Queue<Card> getCommonCards() {

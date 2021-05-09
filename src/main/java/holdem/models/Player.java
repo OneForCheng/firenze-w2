@@ -6,6 +6,7 @@ public class Player {
     private boolean isAllIn;
     private int previousWager;
     private String name;
+    private Card[] holeCards;
 
     public Player(String name) {
         this.name = name;
@@ -49,5 +50,13 @@ public class Player {
 
     public boolean isAllIn() {
         return this.isAllIn;
+    }
+
+    public Card[] getHoleCards() {
+        return holeCards;
+    }
+
+    public void setHoleCards(Card[] holeCards) {
+        this.holeCards = holeCards;
     }
 }
