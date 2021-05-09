@@ -260,4 +260,52 @@ public class GameTest  {
         assertEquals(Round.SHOWDOWN, game.getCurrentRound());
         assertEquals(true, game.isOver());
     }
+
+    @Test
+    public void should_give_two_hand_card_for_every_player() {
+        Player playerA = new Player("A");
+        Player playerB = new Player("B");
+        Player playerC = new Player("C");
+        Game game = new Game(playerA, playerB, playerC);
+
+        assertEquals(2, game.getPlayerHoleCards(playerA).length);
+        assertEquals(2, game.getPlayerHoleCards(playerB).length);
+        assertEquals(2, game.getPlayerHoleCards(playerC).length);
+    }
+
+    @Test
+    public void should_be_different_count_for_common_card_in_different_round() {
+        Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
+
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
+        assertEquals(0, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.FLOP, game.getCurrentRound());
+        assertEquals(3, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.TURN, game.getCurrentRound());
+        assertEquals(4, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.RIVER, game.getCurrentRound());
+        assertEquals(5, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.SHOWDOWN, game.getCurrentRound());
+        assertEquals(5, game.getCommonCards().size());
+    }
 }

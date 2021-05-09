@@ -2,9 +2,11 @@ package holdem;
 
 import holdem.action.Action;
 import holdem.constant.Round;
+import holdem.model.Card;
 import holdem.model.Player;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Game {
@@ -13,6 +15,8 @@ public class Game {
     private int pot;
     private Queue<Player> awaitingPlayers;
     private List<Player> players;
+    private Map<Player, Card[]> playerHoleCards;
+    private Queue<Card> commonCards;
 
     public Game(Player... players) {
         this.players = Arrays.asList(players);
@@ -20,6 +24,11 @@ public class Game {
         this.pot = 0;
         this.currentBid = 0;
         this.currentRound = Round.PRE_FLOP;
+        this.playerHoleCards = Arrays.stream(players).collect(Collectors.toMap(Function.identity(), player -> new Card[]{
+                new Card(),
+                new Card(),
+        }));
+        commonCards = new LinkedList<>();
     }
 
     public Player getActivePlayer() {
@@ -65,6 +74,13 @@ public class Game {
         if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getPreviousWager() == this.currentBid)) {
             this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
             activePlayers.stream().forEach(player -> player.setTookAction(false));
+            if (this.currentRound == Round.FLOP) {
+                this.commonCards.add(new Card());
+                this.commonCards.add(new Card());
+                this.commonCards.add(new Card());
+            } else if (this.currentRound == Round.TURN || this.currentRound == Round.RIVER) {
+                this.commonCards.add(new Card());
+            }
         }
     }
 
@@ -92,5 +108,13 @@ public class Game {
     public boolean isOver() {
         List<Player> activePlayers = this.players.stream().filter(Player::isActive).collect(Collectors.toList());;
         return activePlayers.size() == 1 || this.getCurrentRound() == Round.SHOWDOWN;
+    }
+
+    public Card[] getPlayerHoleCards(Player player) {
+        return this.playerHoleCards.get(player);
+    }
+
+    public Queue<Card> getCommonCards() {
+        return this.commonCards;
     }
 }
