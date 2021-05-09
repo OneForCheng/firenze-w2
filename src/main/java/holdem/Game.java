@@ -1,4 +1,4 @@
-﻿package holdem;
+package holdem;
 
 import holdem.action.Action;
 import holdem.constant.Round;
