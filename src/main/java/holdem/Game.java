@@ -1,4 +1,4 @@
-package holdem;
+﻿package holdem;
 
 import holdem.action.Action;
 import holdem.constant.Round;
@@ -74,13 +74,17 @@ public class Game {
         if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getPreviousWager() == this.currentBid)) {
             this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
             activePlayers.stream().forEach(player -> player.setTookAction(false));
-            if (this.currentRound == Round.FLOP) {
-                this.commonCards.add(new Card());
-                this.commonCards.add(new Card());
-                this.commonCards.add(new Card());
-            } else if (this.currentRound == Round.TURN || this.currentRound == Round.RIVER) {
-                this.commonCards.add(new Card());
-            }
+            addCommonCard();
+        }
+    }
+
+    private void addCommonCard() {
+        if (this.currentRound == Round.FLOP) {
+            this.commonCards.add(new Card());
+            this.commonCards.add(new Card());
+            this.commonCards.add(new Card());
+        } else if (this.currentRound == Round.TURN || this.currentRound == Round.RIVER) {
+            this.commonCards.add(new Card());
         }
     }
 
