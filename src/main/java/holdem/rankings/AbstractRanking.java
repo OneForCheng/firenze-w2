@@ -19,15 +19,15 @@ public abstract class AbstractRanking {
         return cards.stream().sorted(Comparator.comparingInt(Card::getNumber)).collect(Collectors.toList());
     }
 
-    public boolean isStraightFlush(List<Card> cards) {
+    public boolean isStraight(List<Card> cards) {
         List<Card> sortedCards = this.getSortedCards(cards);
-        boolean isStraightFlush = true;
+        boolean isStraight = true;
         for (int i = 0; i < sortedCards.size() - 1; i++) {
             if (sortedCards.get(i).getNumber() - sortedCards.get(i+1).getNumber() != -1) {
-                isStraightFlush = false;
+                isStraight = false;
                 break;
             }
         }
-        return isStraightFlush;
+        return isStraight;
     }
 }
