@@ -6,7 +6,8 @@ public enum CardRanking {
     FOUR_OF_A_KIND("四条", 8),
     FULL_HOUSE("葫芦", 7),
     FLUSH("同花", 6),
-    STRAIGHT("顺子", 5);
+    STRAIGHT("顺子", 5),
+    THREE_OF_A_KIND("三条", 4);
 
     private String type;
     private int priority;
