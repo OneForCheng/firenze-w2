@@ -4,23 +4,16 @@ import holdem.enums.CardRanking;
 import holdem.models.Card;
 
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 public class FourOfAKindRanking extends AbstractRanking {
     public RankingResult parse(List<Card> cards) {
-        List<Card> sortedCards = this.getSortedCards(cards);
-        int firstNumber = sortedCards.get(0).getNumber();
-        int secondNumber = sortedCards.get(1).getNumber();
-        int thirdNumber = sortedCards.get(2).getNumber();
-        int forthNumber = sortedCards.get(3).getNumber();
-        int fifthNumber = sortedCards.get(4).getNumber();
+        Map<Integer, List<Card>> groupedCards = cards.stream().collect(groupingBy(Card::getNumber, toList()));
 
-        boolean isPreviousFourEqual = firstNumber == secondNumber &&
-                secondNumber == thirdNumber &&
-                thirdNumber == forthNumber;
-        boolean isBehindFourEqual = secondNumber == thirdNumber &&
-                thirdNumber == forthNumber &&
-                forthNumber == fifthNumber;
-        if (isPreviousFourEqual || isBehindFourEqual) {
+        if (groupedCards.size() == 2 && (groupedCards.values().stream().anyMatch(value -> value.size() == 4))) {
             return new RankingResult(CardRanking.FOUR_OF_A_KIND);
         }
         return null;
