@@ -60,7 +60,7 @@ public class FlushRankingTest {
     }
 
     @Test
-    public void should_return_correct_result_when_suits_are_same_but_numbers_are_not_straight() {
+    public void should_return_FLUSH_when_suits_are_same_but_numbers_are_not_straight() {
         FlushRanking ranking = new FlushRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {

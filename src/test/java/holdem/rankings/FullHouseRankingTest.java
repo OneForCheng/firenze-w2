@@ -44,7 +44,7 @@ public class FullHouseRankingTest {
     }
 
     @Test
-    public void should_return_correct_ranking_result_when_three_cards_are_same_cards_and_other_two_cards_also_are_same() {
+    public void should_return_FULL_HOUSE_when_three_cards_are_same_cards_and_other_two_cards_also_are_same() {
         FullHouseRanking ranking = new FullHouseRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {

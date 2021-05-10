@@ -28,7 +28,7 @@ public class FourOfAKindRankingTest {
     }
 
     @Test
-    public void should_return_correct_ranking_result_when_five_cards_contain_four_same_cards() {
+    public void should_return_FOUR_OF_A_KIND_when_five_cards_contain_four_same_cards() {
         FourOfAKindRanking ranking = new FourOfAKindRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {

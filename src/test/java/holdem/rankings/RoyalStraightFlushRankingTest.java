@@ -28,7 +28,7 @@ public class RoyalStraightFlushRankingTest {
     }
 
     @Test
-    public void should_return_correct_ranking_result_when_five_cards_is_royal_straight_flush() {
+    public void should_return_ROYAL_STRAIGHT_FLUSH_when_five_cards_is_royal_straight_flush() {
         RoyalStraightFlushRanking ranking = new RoyalStraightFlushRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
