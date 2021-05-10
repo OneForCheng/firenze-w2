@@ -40,6 +40,6 @@ public class RoyalStraightFlushRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.ROYAL_Straight_FLUSH, result.getCardRanking());
+        assertEquals(CardRanking.ROYAL_STRAIGHT_FLUSH, result.getCardRanking());
     }
 }

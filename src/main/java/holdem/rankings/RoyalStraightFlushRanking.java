@@ -16,7 +16,7 @@ public class RoyalStraightFlushRanking extends AbstractRanking {
                     && numbers.contains(12)
                     && numbers.contains(11)
                     && numbers.contains(10)) {
-                result = new RankingResult(CardRanking.ROYAL_Straight_FLUSH);
+                result = new RankingResult(CardRanking.ROYAL_STRAIGHT_FLUSH);
             }
         }
         return result;

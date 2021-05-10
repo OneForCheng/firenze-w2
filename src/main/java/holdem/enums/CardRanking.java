@@ -1,7 +1,8 @@
 package holdem.enums;
 
 public enum CardRanking {
-    ROYAL_Straight_FLUSH("皇家同花顺", 10);
+    ROYAL_STRAIGHT_FLUSH("皇家同花顺", 10),
+    STRAIGHT_FLUSH("同花顺", 9);
 
     private String type;
     private int priority;
