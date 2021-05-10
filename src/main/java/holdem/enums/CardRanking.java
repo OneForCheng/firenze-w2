@@ -9,7 +9,8 @@ public enum CardRanking {
     STRAIGHT("顺子", 5),
     THREE_OF_A_KIND("三条", 4),
     TWO_PAIR("两对", 3),
-    ONE_PAIR("一对", 2);
+    ONE_PAIR("一对", 2),
+    HIGH_CARD("散牌", 1);
 
     private String type;
     private int priority;
