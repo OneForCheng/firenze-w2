@@ -8,7 +8,8 @@ public enum CardRanking {
     FLUSH("同花", 6),
     STRAIGHT("顺子", 5),
     THREE_OF_A_KIND("三条", 4),
-    TWO_PAIR("两对", 3);
+    TWO_PAIR("两对", 3),
+    ONE_PAIR("一对", 2);
 
     private String type;
     private int priority;
