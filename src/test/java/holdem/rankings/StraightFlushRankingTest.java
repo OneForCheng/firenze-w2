@@ -44,7 +44,23 @@ public class StraightFlushRankingTest {
     }
 
     @Test
-    public void should_return_correct_result_when_five_cards_are_straight_flush() {
+    public void should_return_STRAIGHT_FLUSH_when_five_cards_are_royal_straight_flush() {
+        StraightFlushRanking ranking = new StraightFlushRanking();
+        List<Card> cards = new ArrayList<Card>(5){
+            {
+                add(new Card(1, Suit.Club));
+                add(new Card(10, Suit.Club));
+                add(new Card(11, Suit.Club));
+                add(new Card(12, Suit.Club));
+                add(new Card(13, Suit.Club));
+            }
+        };
+        RankingResult result = ranking.parse(cards);
+        assertEquals(CardRanking.STRAIGHT_FLUSH, result.getCardRanking());
+    }
+
+    @Test
+    public void should_return_STRAIGHT_FLUSH_when_five_cards_are_straight_flush() {
         StraightFlushRanking ranking = new StraightFlushRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {

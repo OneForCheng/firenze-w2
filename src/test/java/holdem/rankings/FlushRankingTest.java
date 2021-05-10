@@ -44,6 +44,22 @@ public class FlushRankingTest {
     }
 
     @Test
+    public void should_return_null_when_five_cards_are_royal_straight_flush() {
+        FlushRanking ranking = new FlushRanking();
+        List<Card> cards = new ArrayList<Card>(5){
+            {
+                add(new Card(1, Suit.Club));
+                add(new Card(10, Suit.Club));
+                add(new Card(11, Suit.Club));
+                add(new Card(12, Suit.Club));
+                add(new Card(13, Suit.Club));
+            }
+        };
+        RankingResult result = ranking.parse(cards);
+        assertNull(result);
+    }
+
+    @Test
     public void should_return_correct_result_when_suits_are_same_but_numbers_are_not_straight() {
         FlushRanking ranking = new FlushRanking();
         List<Card> cards = new ArrayList<Card>(5){

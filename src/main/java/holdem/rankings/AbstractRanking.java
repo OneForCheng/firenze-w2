@@ -19,8 +19,20 @@ public abstract class AbstractRanking {
         return cards.stream().sorted(Comparator.comparingInt(Card::getNumber)).collect(Collectors.toList());
     }
 
+    public boolean isRoyalStraight(List<Card> cards) {
+        List<Integer> numbers = cards.stream().map(Card::getNumber).collect(Collectors.toList());
+        return numbers.contains(1)
+                && numbers.contains(13)
+                && numbers.contains(12)
+                && numbers.contains(11)
+                && numbers.contains(10);
+    }
+
     public boolean isStraight(List<Card> cards) {
         List<Card> sortedCards = this.getSortedCards(cards);
+
+        if (this.isRoyalStraight(cards)) return true;
+
         boolean isStraight = true;
         for (int i = 0; i < sortedCards.size() - 1; i++) {
             if (sortedCards.get(i).getNumber() - sortedCards.get(i+1).getNumber() != -1) {
