@@ -12,12 +12,10 @@ import static org.junit.Assert.*;
 
 public class RoyalStraightFlushRankingTest {
     @Test
-    public void should_return_null_when_cards_not_contain_royal_straight_flush() {
+    public void should_return_null_when_five_cards_is_not_royal_straight_flush() {
         RoyalStraightFlushRanking ranking = new RoyalStraightFlushRanking();
-        List<Card> cards = new ArrayList<Card>(7){
+        List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(2, Suit.Club));
-                add(new Card(3, Suit.Club));
                 add(new Card(4, Suit.Club));
                 add(new Card(5, Suit.Club));
                 add(new Card(6, Suit.Club));
@@ -30,14 +28,12 @@ public class RoyalStraightFlushRankingTest {
     }
 
     @Test
-    public void should_return_correct_ranking_result_when_cards_contain_royal_straight_flush() {
+    public void should_return_correct_ranking_result_when_five_cards_is_royal_straight_flush() {
         RoyalStraightFlushRanking ranking = new RoyalStraightFlushRanking();
-        List<Card> cards = new ArrayList<Card>(7){
+        List<Card> cards = new ArrayList<Card>(5){
             {
                 add(new Card(1, Suit.Club));
-                add(new Card(3, Suit.Club));
                 add(new Card(10, Suit.Club));
-                add(new Card(5, Suit.Club));
                 add(new Card(13, Suit.Club));
                 add(new Card(12, Suit.Club));
                 add(new Card(11, Suit.Club));
