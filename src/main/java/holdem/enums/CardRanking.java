@@ -3,7 +3,8 @@ package holdem.enums;
 public enum CardRanking {
     ROYAL_STRAIGHT_FLUSH("皇家同花顺", 10),
     STRAIGHT_FLUSH("同花顺", 9),
-    FOUR_OF_A_KIND("四条", 8);
+    FOUR_OF_A_KIND("四条", 8),
+    FULL_HOUSE("葫芦", 7);
 
     private String type;
     private int priority;
