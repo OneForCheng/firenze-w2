@@ -7,7 +7,7 @@ import java.util.List;
 
 public class StraightFlushRanking extends AbstractRanking {
     public RankingResult parse(List<Card> cards) {
-        if (this.isSameSuit(cards) && this.isStraight(cards)) {
+        if (this.isSameSuit(cards) && this.isStraight(cards) && !this.isRoyalStraight(cards)) {
             return new RankingResult(CardRanking.STRAIGHT_FLUSH);
         }
         return null;

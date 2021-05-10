@@ -28,7 +28,7 @@ public class FlushRankingTest {
     }
 
     @Test
-    public void should_return_FLUSH_when_five_cards_are_straight_flush() {
+    public void should_return_null_when_five_cards_are_straight_flush() {
         FlushRanking ranking = new FlushRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
@@ -40,11 +40,11 @@ public class FlushRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.FLUSH, result.getCardRanking());
+        assertNull(result);
     }
 
     @Test
-    public void should_return_FLUSH_when_five_cards_are_royal_straight_flush() {
+    public void should_return_null_when_five_cards_are_royal_straight_flush() {
         FlushRanking ranking = new FlushRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
@@ -56,7 +56,7 @@ public class FlushRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.FLUSH, result.getCardRanking());
+        assertNull(result);
     }
 
     @Test

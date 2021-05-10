@@ -44,7 +44,7 @@ public class StraightRankingTest {
     }
 
     @Test
-    public void should_return_STRAIGHT_when_five_cards_are_straight_flush() {
+    public void should_return_null_when_five_cards_are_straight_flush() {
         StraightRanking ranking = new StraightRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
@@ -56,11 +56,11 @@ public class StraightRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.STRAIGHT, result.getCardRanking());
+        assertNull(result);
     }
 
     @Test
-    public void should_return_STRAIGHT_when_five_cards_are_royal_straight_flush() {
+    public void should_return_null_when_five_cards_are_royal_straight_flush() {
         StraightRanking ranking = new StraightRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
@@ -72,6 +72,6 @@ public class StraightRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.STRAIGHT, result.getCardRanking());
+        assertNull(result);
     }
 }

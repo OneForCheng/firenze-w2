@@ -44,7 +44,7 @@ public class StraightFlushRankingTest {
     }
 
     @Test
-    public void should_return_STRAIGHT_FLUSH_when_five_cards_are_royal_straight_flush() {
+    public void should_return_null_when_five_cards_are_royal_straight_flush() {
         StraightFlushRanking ranking = new StraightFlushRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
@@ -56,7 +56,7 @@ public class StraightFlushRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.STRAIGHT_FLUSH, result.getCardRanking());
+        assertNull(result);
     }
 
     @Test
