@@ -28,15 +28,31 @@ public class FourOfAKindRankingTest {
     }
 
     @Test
-    public void should_return_FOUR_OF_A_KIND_when_five_cards_contain_four_same_cards() {
+    public void should_return_FOUR_OF_A_KIND_when_five_cards_contain_four_4_and_one_8() {
         FourOfAKindRanking ranking = new FourOfAKindRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
                 add(new Card(4, Suit.Club));
                 add(new Card(4, Suit.Heart));
+                add(new Card(8, Suit.Club));
                 add(new Card(4, Suit.Diamond));
                 add(new Card(4, Suit.Spade));
-                add(new Card(8, Suit.Club));
+            }
+        };
+        RankingResult result = ranking.parse(cards);
+        assertEquals(CardRanking.FOUR_OF_A_KIND, result.getCardRanking());
+    }
+
+    @Test
+    public void should_return_FOUR_OF_A_KIND_when_five_cards_contain_four_4_and_one_1() {
+        FourOfAKindRanking ranking = new FourOfAKindRanking();
+        List<Card> cards = new ArrayList<Card>(5){
+            {
+                add(new Card(4, Suit.Club));
+                add(new Card(1, Suit.Club));
+                add(new Card(4, Suit.Heart));
+                add(new Card(4, Suit.Diamond));
+                add(new Card(4, Suit.Spade));
             }
         };
         RankingResult result = ranking.parse(cards);
