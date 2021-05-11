@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.enums.Suit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -56,7 +56,7 @@ public class FullHouseRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.FULL_HOUSE, result.getCardRanking());
+        assertEquals(CardGroupRanking.FULL_HOUSE, result.getCardRanking());
     }
 
 
@@ -73,6 +73,6 @@ public class FullHouseRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.FULL_HOUSE, result.getCardRanking());
+        assertEquals(CardGroupRanking.FULL_HOUSE, result.getCardRanking());
     }
 }

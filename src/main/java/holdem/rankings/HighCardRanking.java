@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.models.Card;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class HighCardRanking extends AbstractRanking {
         Map<Integer, List<Card>> groupedCards = cards.stream().collect(groupingBy(Card::getNumber, toList()));
 
         if (groupedCards.size() == 5 && !isSameSuit(cards) && !isStraight(cards)) {
-            return new RankingResult(CardRanking.HIGH_CARD);
+            return new RankingResult(CardGroupRanking.HIGH_CARD);
         }
         return null;
     }

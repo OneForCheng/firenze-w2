@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.enums.Suit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -40,6 +40,6 @@ public class RoyalStraightFlushRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.ROYAL_STRAIGHT_FLUSH, result.getCardRanking());
+        assertEquals(CardGroupRanking.ROYAL_STRAIGHT_FLUSH, result.getCardRanking());
     }
 }

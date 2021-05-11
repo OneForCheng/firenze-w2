@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.models.Card;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class ThreeOfAKindRanking extends AbstractRanking {
         Map<Integer, List<Card>> groupedCards = cards.stream().collect(groupingBy(Card::getNumber, toList()));
 
         if (groupedCards.size() == 3 && (groupedCards.values().stream().anyMatch(value -> value.size() == 3))) {
-            return new RankingResult(CardRanking.THREE_OF_A_KIND);
+            return new RankingResult(CardGroupRanking.THREE_OF_A_KIND);
         }
         return null;
     }

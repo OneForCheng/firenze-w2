@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.enums.Suit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -72,6 +72,6 @@ public class FlushRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.FLUSH, result.getCardRanking());
+        assertEquals(CardGroupRanking.FLUSH, result.getCardRanking());
     }
 }

@@ -1,9 +1,8 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.models.Card;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +14,7 @@ public class OnePairRanking extends AbstractRanking {
         Map<Integer, List<Card>> groupedCards = cards.stream().collect(groupingBy(Card::getNumber, toList()));
 
         if (groupedCards.size() == 4 && groupedCards.values().stream().anyMatch(value -> value.size() == 2)) {
-            return new RankingResult(CardRanking.ONE_PAIR);
+            return new RankingResult(CardGroupRanking.ONE_PAIR);
         }
         return null;
     }

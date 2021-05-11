@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.enums.Suit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class StraightRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.STRAIGHT, result.getCardRanking());
+        assertEquals(CardGroupRanking.STRAIGHT, result.getCardRanking());
     }
 
     @Test

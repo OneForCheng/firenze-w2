@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.enums.Suit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -72,6 +72,6 @@ public class StraightFlushRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.STRAIGHT_FLUSH, result.getCardRanking());
+        assertEquals(CardGroupRanking.STRAIGHT_FLUSH, result.getCardRanking());
     }
 }

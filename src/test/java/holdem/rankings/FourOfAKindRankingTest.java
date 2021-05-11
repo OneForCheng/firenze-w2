@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.enums.Suit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class FourOfAKindRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.FOUR_OF_A_KIND, result.getCardRanking());
+        assertEquals(CardGroupRanking.FOUR_OF_A_KIND, result.getCardRanking());
     }
 
     @Test
@@ -56,6 +56,6 @@ public class FourOfAKindRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.FOUR_OF_A_KIND, result.getCardRanking());
+        assertEquals(CardGroupRanking.FOUR_OF_A_KIND, result.getCardRanking());
     }
 }

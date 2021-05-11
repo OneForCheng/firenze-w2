@@ -1,16 +1,16 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 
 public class RankingResult {
 
-    private CardRanking cardRanking;
+    private CardGroupRanking cardGroupRanking;
 
-    public RankingResult(CardRanking cardRanking) {
-        this.cardRanking = cardRanking;
+    public RankingResult(CardGroupRanking cardGroupRanking) {
+        this.cardGroupRanking = cardGroupRanking;
     }
 
-    public CardRanking getCardRanking() {
-        return this.cardRanking;
+    public CardGroupRanking getCardRanking() {
+        return this.cardGroupRanking;
     }
 }

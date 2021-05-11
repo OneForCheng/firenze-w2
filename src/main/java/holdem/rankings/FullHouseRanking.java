@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.models.Card;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class FullHouseRanking extends AbstractRanking {
         Map<Integer, List<Card>> groupedCards = cards.stream().collect(groupingBy(Card::getNumber, toList()));
 
         if (groupedCards.size() == 2 && (groupedCards.values().stream().anyMatch(value -> value.size() == 3))) {
-            return new RankingResult(CardRanking.FULL_HOUSE);
+            return new RankingResult(CardGroupRanking.FULL_HOUSE);
         }
         return null;
     }

@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.CardRanking;
+import holdem.enums.CardGroupRanking;
 import holdem.enums.Suit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -56,6 +56,6 @@ public class ThreeOfAKindRankingTest {
             }
         };
         RankingResult result = ranking.parse(cards);
-        assertEquals(CardRanking.THREE_OF_A_KIND, result.getCardRanking());
+        assertEquals(CardGroupRanking.THREE_OF_A_KIND, result.getCardRanking());
     }
 }
