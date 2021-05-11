@@ -1,6 +1,6 @@
 package holdem.enums;
 
-public enum Suit {
+public enum CardSuit {
     Spade,
     Heart,
     Diamond,

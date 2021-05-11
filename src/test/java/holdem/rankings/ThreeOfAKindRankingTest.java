@@ -1,7 +1,7 @@
 package holdem.rankings;
 
 import holdem.enums.CardGroupRanking;
-import holdem.enums.Suit;
+import holdem.enums.CardSuit;
 import holdem.models.Card;
 import org.junit.Test;
 
@@ -16,11 +16,11 @@ public class ThreeOfAKindRankingTest {
         ThreeOfAKindRanking ranking = new ThreeOfAKindRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(4, Suit.Club));
-                add(new Card(4, Suit.Heart));
-                add(new Card(4, Suit.Diamond));
-                add(new Card(4, Suit.Spade));
-                add(new Card(8, Suit.Club));
+                add(new Card(4, CardSuit.Club));
+                add(new Card(4, CardSuit.Heart));
+                add(new Card(4, CardSuit.Diamond));
+                add(new Card(4, CardSuit.Spade));
+                add(new Card(8, CardSuit.Club));
             }
         };
         RankingResult result = ranking.parse(cards);
@@ -32,11 +32,11 @@ public class ThreeOfAKindRankingTest {
         ThreeOfAKindRanking ranking = new ThreeOfAKindRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(4, Suit.Club));
-                add(new Card(4, Suit.Heart));
-                add(new Card(4, Suit.Diamond));
-                add(new Card(8, Suit.Heart));
-                add(new Card(8, Suit.Club));
+                add(new Card(4, CardSuit.Club));
+                add(new Card(4, CardSuit.Heart));
+                add(new Card(4, CardSuit.Diamond));
+                add(new Card(8, CardSuit.Heart));
+                add(new Card(8, CardSuit.Club));
             }
         };
         RankingResult result = ranking.parse(cards);
@@ -48,11 +48,11 @@ public class ThreeOfAKindRankingTest {
         ThreeOfAKindRanking ranking = new ThreeOfAKindRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(4, Suit.Club));
-                add(new Card(4, Suit.Heart));
-                add(new Card(8, Suit.Club));
-                add(new Card(4, Suit.Diamond));
-                add(new Card(7, Suit.Club));
+                add(new Card(4, CardSuit.Club));
+                add(new Card(4, CardSuit.Heart));
+                add(new Card(8, CardSuit.Club));
+                add(new Card(4, CardSuit.Diamond));
+                add(new Card(7, CardSuit.Club));
             }
         };
         RankingResult result = ranking.parse(cards);

@@ -1,7 +1,7 @@
 package holdem.rankings;
 
 import holdem.enums.CardGroupRanking;
-import holdem.enums.Suit;
+import holdem.enums.CardSuit;
 import holdem.models.Card;
 import org.junit.Test;
 
@@ -16,11 +16,11 @@ public class RoyalStraightFlushRankingTest {
         RoyalStraightFlushRanking ranking = new RoyalStraightFlushRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(4, Suit.Club));
-                add(new Card(5, Suit.Club));
-                add(new Card(6, Suit.Club));
-                add(new Card(7, Suit.Club));
-                add(new Card(8, Suit.Club));
+                add(new Card(4, CardSuit.Club));
+                add(new Card(5, CardSuit.Club));
+                add(new Card(6, CardSuit.Club));
+                add(new Card(7, CardSuit.Club));
+                add(new Card(8, CardSuit.Club));
             }
         };
         RankingResult result = ranking.parse(cards);
@@ -32,11 +32,11 @@ public class RoyalStraightFlushRankingTest {
         RoyalStraightFlushRanking ranking = new RoyalStraightFlushRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(1, Suit.Club));
-                add(new Card(10, Suit.Club));
-                add(new Card(13, Suit.Club));
-                add(new Card(12, Suit.Club));
-                add(new Card(11, Suit.Club));
+                add(new Card(1, CardSuit.Club));
+                add(new Card(10, CardSuit.Club));
+                add(new Card(13, CardSuit.Club));
+                add(new Card(12, CardSuit.Club));
+                add(new Card(11, CardSuit.Club));
             }
         };
         RankingResult result = ranking.parse(cards);

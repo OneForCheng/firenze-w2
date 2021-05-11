@@ -1,6 +1,6 @@
 package holdem.rankings;
 
-import holdem.enums.Suit;
+import holdem.enums.CardSuit;
 import holdem.models.Card;
 
 import java.util.Comparator;
@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractRanking implements IRanking {
     public boolean isSameSuit(List<Card> cards) {
-        List<Suit> distinctSuits = cards.stream().map(Card::getSuit).distinct().collect(Collectors.toList());
-        return distinctSuits.size() == 1;
+        List<CardSuit> distinctCardSuits = cards.stream().map(Card::getSuit).distinct().collect(Collectors.toList());
+        return distinctCardSuits.size() == 1;
     }
 
     public List<Card> getSortedCards(List<Card> cards) {

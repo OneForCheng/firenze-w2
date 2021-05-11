@@ -1,6 +1,6 @@
 package holdem.utils;
 
-import holdem.enums.Suit;
+import holdem.enums.CardSuit;
 import holdem.models.Card;
 
 import java.util.*;
@@ -10,7 +10,7 @@ public class CardGroupHelper {
         List<Card> cards = new ArrayList<>(52);
         for(int i = 1; i <= 13; i++) {
             for(int j = 0; j <= 3; j++) {
-                cards.add(new Card(i, Suit.values()[j]));
+                cards.add(new Card(i, CardSuit.values()[j]));
             }
         }
         Collections.shuffle(cards);

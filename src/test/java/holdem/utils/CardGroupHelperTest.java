@@ -1,6 +1,6 @@
 package holdem.utils;
 
-import holdem.enums.Suit;
+import holdem.enums.CardSuit;
 import holdem.models.Card;
 import org.junit.Test;
 
@@ -18,11 +18,11 @@ public class CardGroupHelperTest {
 
         assertEquals(52, cards.size());
         List<Integer> allNumbers = IntStream.rangeClosed(1, 13).boxed().collect(Collectors.toList());
-        List<Suit> allSuits = Arrays.stream(Suit.values()).collect(Collectors.toList());
+        List<CardSuit> allCardSuits = Arrays.stream(CardSuit.values()).collect(Collectors.toList());
         IntStream.range(0, 52).forEach(i -> {
             Card card = cards.poll();
             assertTrue(allNumbers.contains(card.getNumber()));
-            assertTrue(allSuits.contains(card.getSuit()));
+            assertTrue(allCardSuits.contains(card.getSuit()));
         });
     }
 }

@@ -1,21 +1,21 @@
 package holdem.models;
 
-import holdem.enums.Suit;
+import holdem.enums.CardSuit;
 
 public class Card {
     private int number;
-    private Suit suit;
+    private CardSuit cardSuit;
 
-    public Card(int number, Suit suit) {
+    public Card(int number, CardSuit cardSuit) {
         this.number = number;
-        this.suit = suit;
+        this.cardSuit = cardSuit;
     }
 
     public int getNumber() {
         return number;
     }
 
-    public Suit getSuit() {
-        return suit;
+    public CardSuit getSuit() {
+        return cardSuit;
     }
 }
