@@ -12,7 +12,7 @@ public class Poker {
         this.remainCards = CardGroupHelper.generate52ShuffledCards();
     }
 
-    public Card giveOut() {
+    public Card handOut() {
         if (this.remainCards.size() == 0) return null;
 
         return this.remainCards.poll();

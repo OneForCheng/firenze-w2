@@ -31,8 +31,8 @@ public class Game {
 
     private void giveOutHoleCardsToPlayers(List<Player> players, Poker poker) {
         players.forEach(player -> player.setHoleCards(new Card[]{
-                poker.giveOut(),
-                poker.giveOut(),
+                poker.handOut(),
+                poker.handOut(),
         }));
     }
 
@@ -85,11 +85,11 @@ public class Game {
 
     private void addCommonCard() {
         if (this.currentRound == Round.FLOP) {
-            this.commonCards.add(this.poker.giveOut());
-            this.commonCards.add(this.poker.giveOut());
-            this.commonCards.add(this.poker.giveOut());
+            this.commonCards.add(this.poker.handOut());
+            this.commonCards.add(this.poker.handOut());
+            this.commonCards.add(this.poker.handOut());
         } else if (this.currentRound == Round.TURN || this.currentRound == Round.RIVER) {
-            this.commonCards.add(this.poker.giveOut());
+            this.commonCards.add(this.poker.handOut());
         }
     }
 
