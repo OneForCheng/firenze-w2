@@ -1,6 +1,7 @@
 package holdem.rankings;
 
 import holdem.enums.CardGroupRanking;
+import holdem.enums.CardRank;
 import holdem.enums.CardSuit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -16,11 +17,11 @@ public class FullHouseRankingTest {
         FullHouseRanking ranking = new FullHouseRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(4, CardSuit.Club));
-                add(new Card(4, CardSuit.Heart));
-                add(new Card(5, CardSuit.Diamond));
-                add(new Card(5, CardSuit.Club));
-                add(new Card(8, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Heart));
+                add(new Card(CardRank.FIVE, CardSuit.Diamond));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+                add(new Card(CardRank.EIGHT, CardSuit.Club));
             }
         };
         RankingResult result = ranking.parse(cards);
@@ -32,11 +33,11 @@ public class FullHouseRankingTest {
         FullHouseRanking ranking = new FullHouseRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(4, CardSuit.Club));
-                add(new Card(4, CardSuit.Heart));
-                add(new Card(4, CardSuit.Diamond));
-                add(new Card(5, CardSuit.Club));
-                add(new Card(8, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Heart));
+                add(new Card(CardRank.FOUR, CardSuit.Diamond));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+                add(new Card(CardRank.EIGHT, CardSuit.Club));
             }
         };
         RankingResult result = ranking.parse(cards);
@@ -48,11 +49,11 @@ public class FullHouseRankingTest {
         FullHouseRanking ranking = new FullHouseRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(4, CardSuit.Club));
-                add(new Card(4, CardSuit.Heart));
-                add(new Card(5, CardSuit.Club));
-                add(new Card(4, CardSuit.Diamond));
-                add(new Card(5, CardSuit.Heart));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Heart));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Diamond));
+                add(new Card(CardRank.FIVE, CardSuit.Heart));
             }
         };
         RankingResult result = ranking.parse(cards);
@@ -65,11 +66,11 @@ public class FullHouseRankingTest {
         FullHouseRanking ranking = new FullHouseRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(4, CardSuit.Club));
-                add(new Card(4, CardSuit.Heart));
-                add(new Card(1, CardSuit.Club));
-                add(new Card(4, CardSuit.Diamond));
-                add(new Card(1, CardSuit.Heart));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Heart));
+                add(new Card(CardRank.ACE, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Diamond));
+                add(new Card(CardRank.ACE, CardSuit.Heart));
             }
         };
         RankingResult result = ranking.parse(cards);

@@ -1,5 +1,6 @@
 package holdem.comparings;
 
+import holdem.enums.CardRank;
 import holdem.enums.CardSuit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -15,21 +16,21 @@ public class StraightFlushComparingTest {
         IComparing comparing = new StraightFlushComparing();
         List<Card> first = new ArrayList<Card>(5){
             {
-                add(new Card(3, CardSuit.Club));
-                add(new Card(5, CardSuit.Club));
-                add(new Card(4, CardSuit.Club));
-                add(new Card(7, CardSuit.Club));
-                add(new Card(6, CardSuit.Club));
+                add(new Card(CardRank.THREE, CardSuit.Club));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.SEVEN, CardSuit.Club));
+                add(new Card(CardRank.SIX, CardSuit.Club));
             }
         };
         List<Card> second = new ArrayList<Card>(5){
             {
                 {
-                    add(new Card(7, CardSuit.Club));
-                    add(new Card(5, CardSuit.Club));
-                    add(new Card(4, CardSuit.Club));
-                    add(new Card(3, CardSuit.Club));
-                    add(new Card(6, CardSuit.Club));
+                    add(new Card(CardRank.SEVEN, CardSuit.Club));
+                    add(new Card(CardRank.FIVE, CardSuit.Club));
+                    add(new Card(CardRank.FOUR, CardSuit.Club));
+                    add(new Card(CardRank.THREE, CardSuit.Club));
+                    add(new Card(CardRank.SIX, CardSuit.Club));
                 }
             }
         };
@@ -41,21 +42,21 @@ public class StraightFlushComparingTest {
         IComparing comparing = new StraightFlushComparing();
         List<Card> first = new ArrayList<Card>(5){
             {
-                add(new Card(3, CardSuit.Club));
-                add(new Card(5, CardSuit.Club));
-                add(new Card(4, CardSuit.Club));
-                add(new Card(7, CardSuit.Club));
-                add(new Card(6, CardSuit.Club));
+                add(new Card(CardRank.THREE, CardSuit.Club));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.SEVEN, CardSuit.Club));
+                add(new Card(CardRank.SIX, CardSuit.Club));
             }
         };
         List<Card> second = new ArrayList<Card>(5){
             {
                 {
-                    add(new Card(7, CardSuit.Club));
-                    add(new Card(5, CardSuit.Club));
-                    add(new Card(4, CardSuit.Club));
-                    add(new Card(8, CardSuit.Club));
-                    add(new Card(6, CardSuit.Club));
+                    add(new Card(CardRank.SEVEN, CardSuit.Club));
+                    add(new Card(CardRank.FIVE, CardSuit.Club));
+                    add(new Card(CardRank.FOUR, CardSuit.Club));
+                    add(new Card(CardRank.EIGHT, CardSuit.Club));
+                    add(new Card(CardRank.SIX, CardSuit.Club));
                 }
             }
         };
@@ -68,21 +69,21 @@ public class StraightFlushComparingTest {
         List<Card> first = new ArrayList<Card>(5){
             {
                 {
-                    add(new Card(7, CardSuit.Club));
-                    add(new Card(5, CardSuit.Club));
-                    add(new Card(4, CardSuit.Club));
-                    add(new Card(8, CardSuit.Club));
-                    add(new Card(6, CardSuit.Club));
+                    add(new Card(CardRank.SEVEN, CardSuit.Club));
+                    add(new Card(CardRank.FIVE, CardSuit.Club));
+                    add(new Card(CardRank.FOUR, CardSuit.Club));
+                    add(new Card(CardRank.EIGHT, CardSuit.Club));
+                    add(new Card(CardRank.SIX, CardSuit.Club));
                 }
             }
         };
         List<Card> second = new ArrayList<Card>(5){
             {
-                add(new Card(3, CardSuit.Club));
-                add(new Card(5, CardSuit.Club));
-                add(new Card(4, CardSuit.Club));
-                add(new Card(7, CardSuit.Club));
-                add(new Card(6, CardSuit.Club));
+                add(new Card(CardRank.THREE, CardSuit.Club));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.SEVEN, CardSuit.Club));
+                add(new Card(CardRank.SIX, CardSuit.Club));
             }
         };
         assertEquals(1, comparing.compare(first, second));

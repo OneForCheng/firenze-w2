@@ -1,6 +1,7 @@
 package holdem.rankings;
 
 import holdem.enums.CardGroupRanking;
+import holdem.enums.CardRank;
 import holdem.enums.CardSuit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -16,11 +17,11 @@ public class RoyalStraightFlushRankingTest {
         RoyalStraightFlushRanking ranking = new RoyalStraightFlushRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(4, CardSuit.Club));
-                add(new Card(5, CardSuit.Club));
-                add(new Card(6, CardSuit.Club));
-                add(new Card(7, CardSuit.Club));
-                add(new Card(8, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+                add(new Card(CardRank.SIX, CardSuit.Club));
+                add(new Card(CardRank.SEVEN, CardSuit.Club));
+                add(new Card(CardRank.EIGHT, CardSuit.Club));
             }
         };
         RankingResult result = ranking.parse(cards);
@@ -32,11 +33,11 @@ public class RoyalStraightFlushRankingTest {
         RoyalStraightFlushRanking ranking = new RoyalStraightFlushRanking();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(1, CardSuit.Club));
-                add(new Card(10, CardSuit.Club));
-                add(new Card(13, CardSuit.Club));
-                add(new Card(12, CardSuit.Club));
-                add(new Card(11, CardSuit.Club));
+                add(new Card(CardRank.ACE, CardSuit.Club));
+                add(new Card(CardRank.TEN, CardSuit.Club));
+                add(new Card(CardRank.KING, CardSuit.Club));
+                add(new Card(CardRank.QUEUE, CardSuit.Club));
+                add(new Card(CardRank.JACK, CardSuit.Club));
             }
         };
         RankingResult result = ranking.parse(cards);

@@ -1,5 +1,6 @@
 package holdem.rankings;
 
+import holdem.enums.CardRank;
 import holdem.enums.CardSuit;
 import holdem.models.Card;
 
@@ -19,11 +20,11 @@ public abstract class AbstractRanking implements IRanking {
 
     public boolean isRoyalStraight(List<Card> cards) {
         List<Integer> numbers = cards.stream().map(Card::getNumber).collect(Collectors.toList());
-        return numbers.contains(1)
-                && numbers.contains(13)
-                && numbers.contains(12)
-                && numbers.contains(11)
-                && numbers.contains(10);
+        return numbers.contains(CardRank.ACE.getNumber())
+                && numbers.contains(CardRank.KING.getNumber())
+                && numbers.contains(CardRank.QUEUE.getNumber())
+                && numbers.contains(CardRank.JACK.getNumber())
+                && numbers.contains(CardRank.TEN.getNumber());
     }
 
     public boolean isStraight(List<Card> cards) {

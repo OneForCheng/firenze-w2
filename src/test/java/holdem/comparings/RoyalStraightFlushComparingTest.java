@@ -1,5 +1,6 @@
 package holdem.comparings;
 
+import holdem.enums.CardRank;
 import holdem.enums.CardSuit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -15,11 +16,11 @@ public class RoyalStraightFlushComparingTest {
         IComparing comparing = new RoyalStraightFlushComparing();
         List<Card> cards = new ArrayList<Card>(5){
             {
-                add(new Card(1, CardSuit.Club));
-                add(new Card(10, CardSuit.Club));
-                add(new Card(13, CardSuit.Club));
-                add(new Card(12, CardSuit.Club));
-                add(new Card(11, CardSuit.Club));
+                add(new Card(CardRank.ACE, CardSuit.Club));
+                add(new Card(CardRank.TEN, CardSuit.Club));
+                add(new Card(CardRank.KING, CardSuit.Club));
+                add(new Card(CardRank.QUEUE, CardSuit.Club));
+                add(new Card(CardRank.JACK, CardSuit.Club));
             }
         };
         assertEquals(0, comparing.compare(cards, cards));

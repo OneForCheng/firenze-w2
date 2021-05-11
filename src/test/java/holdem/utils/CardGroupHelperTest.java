@@ -1,5 +1,6 @@
 package holdem.utils;
 
+import holdem.enums.CardRank;
 import holdem.enums.CardSuit;
 import holdem.models.Card;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class CardGroupHelperTest {
         Queue<Card> cards = CardGroupHelper.generate52ShuffledCards();
 
         assertEquals(52, cards.size());
-        List<Integer> allNumbers = IntStream.rangeClosed(1, 13).boxed().collect(Collectors.toList());
+        List<Integer> allNumbers = IntStream.rangeClosed(CardRank.TWO.getNumber(), CardRank.ACE.getNumber()).boxed().collect(Collectors.toList());
         List<CardSuit> allCardSuits = Arrays.stream(CardSuit.values()).collect(Collectors.toList());
         IntStream.range(0, 52).forEach(i -> {
             Card card = cards.poll();
