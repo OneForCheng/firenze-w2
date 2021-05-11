@@ -5,6 +5,7 @@ import holdem.enums.Round;
 import holdem.models.Card;
 import holdem.models.Poker;
 import holdem.models.Player;
+import holdem.generators.Shuffled52Poker;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class Game {
         this.pot = 0;
         this.currentBid = 0;
         this.currentRound = Round.PRE_FLOP;
-        this.poker = new Poker();
+        this.poker = new Poker(new Shuffled52Poker());
         this.commonCards = new LinkedList<>();
         this.giveOutHoleCardsToPlayers(this.players, this.poker);
     }

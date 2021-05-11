@@ -1,6 +1,6 @@
 package holdem.models;
 
-import holdem.utils.CardGroupHelper;
+import holdem.generators.PokerGenerator;
 
 import java.util.Queue;
 
@@ -8,8 +8,8 @@ public class Poker {
 
     private final Queue<Card> remainCards;
 
-    public Poker() {
-        this.remainCards = CardGroupHelper.generate52ShuffledCards();
+    public Poker(PokerGenerator generator) {
+        this.remainCards = generator.create();
     }
 
     public Card handOut() {
