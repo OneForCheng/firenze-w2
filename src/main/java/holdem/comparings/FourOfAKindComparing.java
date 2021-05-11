@@ -17,15 +17,15 @@ public class FourOfAKindComparing extends AbstractComparing {
 
     private int getCardGroupWeight(List<Card> cards) {
         Map<Integer, Long> groupCards = cards.stream().collect(groupingBy(Card::getNumber, counting()));
-        int fourPairNumber = 0, singleNumber = 0;
+        int fourNumber = 0, singleNumber = 0;
         for (Integer key : groupCards.keySet()) {
             if (groupCards.get(key) == 4) {
-                fourPairNumber = key;
+                fourNumber = key;
             } else {
                 singleNumber = key;
             }
         }
 
-        return  fourPairNumber * CardRank.ACE.getNumber() + singleNumber;
+        return  fourNumber * CardRank.ACE.getNumber() + singleNumber;
     }
 }
