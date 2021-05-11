@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class RoyalStraightFlushComparingTest {
     @Test
     public void should_return_0_for_royal_straight_flush_comparing() {
-        RoyalStraightFlushComparing royalStraightFlushComparing = new RoyalStraightFlushComparing();
+        IComparing comparing = new RoyalStraightFlushComparing();
         List<Card> cards = new ArrayList<Card>(5){
             {
                 add(new Card(1, Suit.Club));
@@ -22,6 +22,6 @@ public class RoyalStraightFlushComparingTest {
                 add(new Card(11, Suit.Club));
             }
         };
-        assertEquals(0, royalStraightFlushComparing.compare(cards, cards));
+        assertEquals(0, comparing.compare(cards, cards));
     }
 }
