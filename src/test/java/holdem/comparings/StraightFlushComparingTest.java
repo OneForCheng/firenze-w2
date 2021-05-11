@@ -64,6 +64,32 @@ public class StraightFlushComparingTest {
     }
 
     @Test
+    public void should_return_negative_1_when_first_argument_is_min_straight_flush() {
+        IComparing comparing = new StraightFlushComparing();
+        List<Card> first = new ArrayList<Card>(5){
+            {
+                add(new Card(CardRank.ACE, CardSuit.Club));
+                add(new Card(CardRank.TWO, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.THREE, CardSuit.Club));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+            }
+        };
+        List<Card> second = new ArrayList<Card>(5){
+            {
+                {
+                    add(new Card(CardRank.TWO, CardSuit.Club));
+                    add(new Card(CardRank.FOUR, CardSuit.Club));
+                    add(new Card(CardRank.FIVE, CardSuit.Club));
+                    add(new Card(CardRank.THREE, CardSuit.Club));
+                    add(new Card(CardRank.SIX, CardSuit.Club));
+                }
+            }
+        };
+        assertEquals(-1, comparing.compare(first, second));
+    }
+
+    @Test
     public void should_return_positive_1_when_first_argument_greater_than_the_second() {
         IComparing comparing = new StraightFlushComparing();
         List<Card> first = new ArrayList<Card>(5){
