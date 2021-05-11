@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
 
-public class CardGroupHelperTest {
+public class PokerHelperTest {
 
     @Test
     public void generate52ShuffledCards() {

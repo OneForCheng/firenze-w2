@@ -4,11 +4,11 @@ import holdem.utils.CardGroupHelper;
 
 import java.util.Queue;
 
-public class CardGroup {
+public class Poker {
 
     private final Queue<Card> remainCards;
 
-    public CardGroup() {
+    public Poker() {
         this.remainCards = CardGroupHelper.generate52ShuffledCards();
     }
 

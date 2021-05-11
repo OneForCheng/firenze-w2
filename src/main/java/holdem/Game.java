@@ -3,7 +3,7 @@ package holdem;
 import holdem.actions.Action;
 import holdem.enums.Round;
 import holdem.models.Card;
-import holdem.models.CardGroup;
+import holdem.models.Poker;
 import holdem.models.Player;
 
 import java.util.*;
@@ -16,7 +16,7 @@ public class Game {
     private Queue<Player> awaitingPlayers;
     private List<Player> players;
     private Queue<Card> commonCards;
-    private CardGroup cardGroup;
+    private Poker poker;
 
     public Game(Player... players) {
         this.players = Arrays.asList(players);
@@ -24,15 +24,15 @@ public class Game {
         this.pot = 0;
         this.currentBid = 0;
         this.currentRound = Round.PRE_FLOP;
-        this.cardGroup = new CardGroup();
+        this.poker = new Poker();
         this.commonCards = new LinkedList<>();
-        this.giveOutHoleCardsToPlayers(this.players, this.cardGroup);
+        this.giveOutHoleCardsToPlayers(this.players, this.poker);
     }
 
-    private void giveOutHoleCardsToPlayers(List<Player> players, CardGroup cardGroup) {
+    private void giveOutHoleCardsToPlayers(List<Player> players, Poker poker) {
         players.forEach(player -> player.setHoleCards(new Card[]{
-                cardGroup.giveOut(),
-                cardGroup.giveOut(),
+                poker.giveOut(),
+                poker.giveOut(),
         }));
     }
 
@@ -85,11 +85,11 @@ public class Game {
 
     private void addCommonCard() {
         if (this.currentRound == Round.FLOP) {
-            this.commonCards.add(this.cardGroup.giveOut());
-            this.commonCards.add(this.cardGroup.giveOut());
-            this.commonCards.add(this.cardGroup.giveOut());
+            this.commonCards.add(this.poker.giveOut());
+            this.commonCards.add(this.poker.giveOut());
+            this.commonCards.add(this.poker.giveOut());
         } else if (this.currentRound == Round.TURN || this.currentRound == Round.RIVER) {
-            this.commonCards.add(this.cardGroup.giveOut());
+            this.commonCards.add(this.poker.giveOut());
         }
     }
 
