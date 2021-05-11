@@ -19,18 +19,27 @@ public abstract class AbstractRanking implements IRanking {
     }
 
     public boolean isRoyalStraight(List<Card> cards) {
-        List<Integer> numbers = cards.stream().map(Card::getNumber).collect(Collectors.toList());
-        return numbers.contains(CardRank.ACE.getNumber())
-                && numbers.contains(CardRank.KING.getNumber())
-                && numbers.contains(CardRank.QUEUE.getNumber())
-                && numbers.contains(CardRank.JACK.getNumber())
-                && numbers.contains(CardRank.TEN.getNumber());
+        List<CardRank> cardRanks = cards.stream().map(Card::getRank).collect(Collectors.toList());
+        return cardRanks.contains(CardRank.ACE)
+                && cardRanks.contains(CardRank.KING)
+                && cardRanks.contains(CardRank.QUEUE)
+                && cardRanks.contains(CardRank.JACK)
+                && cardRanks.contains(CardRank.TEN);
+    }
+
+    public boolean isMinStraight(List<Card> cards) {
+        List<CardRank> cardRanks = cards.stream().map(Card::getRank).collect(Collectors.toList());
+        return cardRanks.contains(CardRank.ACE)
+                && cardRanks.contains(CardRank.TWO)
+                && cardRanks.contains(CardRank.THREE)
+                && cardRanks.contains(CardRank.FOUR)
+                && cardRanks.contains(CardRank.FIVE);
     }
 
     public boolean isStraight(List<Card> cards) {
         List<Card> sortedCards = this.getSortedCards(cards);
 
-        if (this.isRoyalStraight(cards)) return true;
+        if (this.isRoyalStraight(cards) || this.isMinStraight(cards)) return true;
 
         boolean isStraight = true;
         for (int i = 0; i < sortedCards.size() - 1; i++) {

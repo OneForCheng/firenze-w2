@@ -45,6 +45,22 @@ public class StraightRankingTest {
     }
 
     @Test
+    public void should_return_STRAIGHT_when_five_cards_is_min_straight() {
+        StraightRanking ranking = new StraightRanking();
+        List<Card> cards = new ArrayList<Card>(5){
+            {
+                add(new Card(CardRank.ACE, CardSuit.Club));
+                add(new Card(CardRank.TWO, CardSuit.Heart));
+                add(new Card(CardRank.THREE, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+            }
+        };
+        RankingResult result = ranking.parse(cards);
+        assertEquals(CardGroupRanking.STRAIGHT, result.getCardRanking());
+    }
+
+    @Test
     public void should_return_null_when_five_cards_are_straight_flush() {
         StraightRanking ranking = new StraightRanking();
         List<Card> cards = new ArrayList<Card>(5){

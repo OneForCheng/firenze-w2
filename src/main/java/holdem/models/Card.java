@@ -16,6 +16,10 @@ public class Card {
         return this.cardRank.getNumber();
     }
 
+    public CardRank getRank() {
+        return cardRank;
+    }
+
     public CardSuit getSuit() {
         return cardSuit;
     }
