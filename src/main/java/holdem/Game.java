@@ -33,14 +33,7 @@ public class Game {
         this.currentBid = 0;
         this.currentRound = Round.PRE_FLOP;
         this.commonCards = new ArrayList<>();
-        this.giveOutHoleCardsToPlayers(this.players, this.poker);
-    }
-
-    private void giveOutHoleCardsToPlayers(List<Player> players, Poker poker) {
-        players.forEach(player -> player.setHoleCards(new Card[]{
-                poker.handOut(),
-                poker.handOut(),
-        }));
+        this.handOutHoleCards(this.players, this.poker);
     }
 
     public Player getActivePlayer() {
@@ -67,6 +60,14 @@ public class Game {
         return players.stream().filter(Player::isAllIn).collect(Collectors.toList());
     }
 
+    public List<Card> getCommonCards() {
+        return this.commonCards;
+    }
+
+    public boolean isOver() {
+        return this.getActivePlayers().size() == 1 || this.getCurrentRound() == Round.SHOWDOWN;
+    }
+
     public void execute(Action action) {
         if (!this.isOver()) {
             Player activePlayer = awaitingPlayers.poll();
@@ -78,26 +79,6 @@ public class Game {
 
     public void awaiting(Player activePlayer) {
         awaitingPlayers.offer(activePlayer);
-    }
-
-    private void nextRound() {
-        List<Player> activePlayers = getActivePlayers();
-
-        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getCurrentRoundWager(this.currentRound) == this.currentBid)) {
-            this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
-            activePlayers.forEach(player -> player.setTookAction(false));
-            handOutCommonCard();
-        }
-    }
-
-    private void handOutCommonCard() {
-        if (this.currentRound == Round.FLOP) {
-            this.commonCards.add(this.poker.handOut());
-            this.commonCards.add(this.poker.handOut());
-            this.commonCards.add(this.poker.handOut());
-        } else if (this.currentRound == Round.TURN || this.currentRound == Round.RIVER) {
-            this.commonCards.add(this.poker.handOut());
-        }
     }
 
     public void setCurrentBidForBet() {
@@ -121,21 +102,6 @@ public class Game {
         this.pot += bid;
     }
 
-    public boolean isOver() {
-        List<Player> activePlayers = getActivePlayers();
-        return activePlayers.size() == 1 || this.getCurrentRound() == Round.SHOWDOWN;
-    }
-
-    private List<Player> getActivePlayers() {
-        List<Player> activePlayers = this.players.stream().filter(Player::isActive).collect(Collectors.toList());
-
-        return activePlayers;
-    }
-
-    public List<Card> getCommonCards() {
-        return this.commonCards;
-    }
-
     public Map<Player, Integer> getDistributedResult() {
         if (!this.isOver()) return null;
 
@@ -152,5 +118,36 @@ public class Game {
         }
 
         return result;
+    }
+
+    private void nextRound() {
+        List<Player> activePlayers = getActivePlayers();
+
+        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getCurrentRoundWager(this.currentRound) == this.currentBid)) {
+            this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
+            activePlayers.forEach(player -> player.setTookAction(false));
+            handOutCommonCard();
+        }
+    }
+
+    private void handOutHoleCards(List<Player> players, Poker poker) {
+        players.forEach(player -> player.setHoleCards(new Card[]{
+                poker.handOut(),
+                poker.handOut(),
+        }));
+    }
+
+    private void handOutCommonCard() {
+        if (this.currentRound == Round.FLOP) {
+            this.commonCards.add(this.poker.handOut());
+            this.commonCards.add(this.poker.handOut());
+            this.commonCards.add(this.poker.handOut());
+        } else if (this.currentRound == Round.TURN || this.currentRound == Round.RIVER) {
+            this.commonCards.add(this.poker.handOut());
+        }
+    }
+
+    private List<Player> getActivePlayers() {
+        return this.players.stream().filter(Player::isActive).collect(Collectors.toList());
     }
 }
