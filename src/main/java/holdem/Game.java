@@ -1,10 +1,13 @@
 package holdem;
 
 import holdem.actions.Action;
+import holdem.comparators.BestCardGroupRanking;
 import holdem.comparators.CardComparator;
+import holdem.enums.CardGroupRanking;
 import holdem.enums.Round;
 import holdem.models.*;
 import holdem.generators.Shuffled52Poker;
+import javafx.util.Pair;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -115,9 +118,23 @@ public class Game {
 
         if (mayWinMoneyPlayers.size() == 1) {
             result.put(mayWinMoneyPlayers.get(0), pot);
+            return result;
         }
 
+        List<BestCardGroupRanking> bestCardGroupRankings = getBestCardGroupRankings(mayWinMoneyPlayers);
+        List<BestCardGroupRanking> descSortedBestCardGroupRankings = this.cardComparator.getDescSortedBestCardGroupRankings(bestCardGroupRankings);
+
+        BestCardGroupRanking max = descSortedBestCardGroupRankings.get(0);
+        result.put(max.getPlayer(), pot);
+
         return result;
+    }
+
+    private List<BestCardGroupRanking> getBestCardGroupRankings(List<Player> mayWinMoneyPlayers) {
+        return mayWinMoneyPlayers.stream().map(player -> {
+            Pair<CardGroupRanking, List<Card>> maxCardGroup = this.cardComparator.getMaxCardGroup(this.commonCards, player.getHoleCards());
+            return new BestCardGroupRanking(player, maxCardGroup.getKey(), maxCardGroup.getValue());
+        }).collect(Collectors.toList());
     }
 
     private void nextRound() {

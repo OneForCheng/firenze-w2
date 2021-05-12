@@ -93,4 +93,14 @@ public class CardComparator {
         }
         return null;
     }
+
+    public List<BestCardGroupRanking> getDescSortedBestCardGroupRankings(List<BestCardGroupRanking> bestCardGroupRankings) {
+        return bestCardGroupRankings.stream().sorted((first, second) -> {
+            if (first.getCardGroupRanking().getPriority() == second.getCardGroupRanking().getPriority()) {
+                return this.comparisons.get(first.getCardGroupRanking()).compare(second.getCards(), first.getCards());
+            }
+
+            return second.getCardGroupRanking().getPriority() - first.getCardGroupRanking().getPriority();
+        }).collect(Collectors.toList());
+    }
 }
