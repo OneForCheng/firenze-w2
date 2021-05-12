@@ -122,10 +122,18 @@ public class Game {
         }
 
         List<BestCardGroupRanking> bestCardGroupRankings = getBestCardGroupRankings(mayWinMoneyPlayers);
-        List<BestCardGroupRanking> descSortedBestCardGroupRankings = this.cardComparator.getDescSortedBestCardGroupRankings(bestCardGroupRankings);
+        List<List<BestCardGroupRanking>> group = this.cardComparator.getDescSortedBestCardGroupRankingGroup(bestCardGroupRankings);
 
-        BestCardGroupRanking max = descSortedBestCardGroupRankings.get(0);
-        result.put(max.getPlayer(), pot);
+        List<BestCardGroupRanking> winners = group.get(0);
+        int winnerCount = winners.size();
+        if (winnerCount == 1) {
+            result.put(winners.get(0).getPlayer(), pot);
+            return result;
+        }
+
+        winners.forEach(winner -> {
+            result.put(winner.getPlayer(), pot / winnerCount);
+        });
 
         return result;
     }

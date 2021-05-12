@@ -94,7 +94,34 @@ public class CardComparator {
         return null;
     }
 
-    public List<BestCardGroupRanking> getDescSortedBestCardGroupRankings(List<BestCardGroupRanking> bestCardGroupRankings) {
+    public List<List<BestCardGroupRanking>> getDescSortedBestCardGroupRankingGroup(List<BestCardGroupRanking> bestCardGroupRankings) {
+        List<List<BestCardGroupRanking>> result = new ArrayList<>();
+
+        if (bestCardGroupRankings.size() == 0) return result;
+
+        List<BestCardGroupRanking> descSortedBestCardGroupRankings = this.getDescSortedBestCardGroupRankings(bestCardGroupRankings);
+
+        BestCardGroupRanking previous = descSortedBestCardGroupRankings.get(0);
+        List<BestCardGroupRanking> sameCards = new ArrayList<>();
+        sameCards.add(previous);
+
+        for (int i = 1; i < descSortedBestCardGroupRankings.size(); i++) {
+            BestCardGroupRanking current = descSortedBestCardGroupRankings.get(i);
+            if(this.isSameCards(previous, current)) {
+                sameCards.add(current);
+            } else {
+                result.add(sameCards);
+                previous = current;
+                sameCards = new ArrayList<>();
+                sameCards.add(previous);
+            }
+        }
+        result.add(sameCards);
+
+        return result;
+    }
+
+    private List<BestCardGroupRanking> getDescSortedBestCardGroupRankings(List<BestCardGroupRanking> bestCardGroupRankings) {
         return bestCardGroupRankings.stream().sorted((first, second) -> {
             if (first.getCardGroupRanking().getPriority() == second.getCardGroupRanking().getPriority()) {
                 return this.comparisons.get(first.getCardGroupRanking()).compare(second.getCards(), first.getCards());
@@ -102,5 +129,10 @@ public class CardComparator {
 
             return second.getCardGroupRanking().getPriority() - first.getCardGroupRanking().getPriority();
         }).collect(Collectors.toList());
+    }
+
+    private boolean isSameCards(BestCardGroupRanking a, BestCardGroupRanking b) {
+        return a.getCardGroupRanking().getPriority() == b.getCardGroupRanking().getPriority() &&
+                this.comparisons.get(a.getCardGroupRanking()).compare(a.getCards(), b.getCards()) == 0;
     }
 }
