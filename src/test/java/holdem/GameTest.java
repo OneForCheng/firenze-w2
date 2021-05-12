@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -325,18 +325,21 @@ public class GameTest  {
         assertEquals(5, game.getCommonCards().size());
     }
 
-
     @Test
-    public void should_all_player_are_winner_if_common_card_is_max_card_group_ranking() {
+    public void should_play_a_win_all_wager_if_other_players_fold() {
+        Player playerA = new Player("A");
+        Player playerB = new Player("B");
+        Player playerC = new Player("C");
+
         List<Player> players = new ArrayList<Player>() {
             {
-                add(new Player("A"));
-                add(new Player("B"));
-                add(new Player("C"));
+
+                add(playerA);
+                add(playerB);
+                add(playerC);
             }
         };
         CardComparator comparator = new CardComparator();
-
         Game game = new Game(players, new Poker(() -> new LinkedList<Card>() {
             {
                 add(new Card(CardRank.TWO, CardSuit.Club));
@@ -355,7 +358,7 @@ public class GameTest  {
         }), comparator);
 
 
-        assertNull(game.getWinners());
+        assertNull(game.getDistributedResult());
         assertEquals(Round.PRE_FLOP, game.getCurrentRound());
         assertEquals(0, game.getCommonCards().size());
 
@@ -373,154 +376,18 @@ public class GameTest  {
         assertEquals(Round.TURN, game.getCurrentRound());
         assertEquals(4, game.getCommonCards().size());
 
-        game.execute(new Pass());
-        game.execute(new Pass());
-        game.execute(new Pass());
-
-        assertEquals(Round.RIVER, game.getCurrentRound());
-        assertEquals(5, game.getCommonCards().size());
-
-        game.execute(new Pass());
-        game.execute(new Pass());
-        game.execute(new Pass());
-
-        assertEquals(Round.SHOWDOWN, game.getCurrentRound());
-        assertEquals(5, game.getCommonCards().size());
-
-        List<String> winnerNames = game.getWinners().stream().map(Player::getName).collect(Collectors.toList());
-        assertEquals(3, winnerNames.size());
-        assertTrue(winnerNames.contains("A"));
-        assertTrue(winnerNames.contains("B"));
-        assertTrue(winnerNames.contains("C"));
-    }
-
-    @Test
-    public void should_player_a_is_winner_if_card_group_of_player_a_is_max_card_group_ranking() {
-        List<Player> players = new ArrayList<Player>() {
-            {
-                add(new Player("A"));
-                add(new Player("B"));
-                add(new Player("C"));
-            }
-        };
-        CardComparator comparator = new CardComparator();
-
-        Game game = new Game(players, new Poker(() -> new LinkedList<Card>() {
-            {
-                add(new Card(CardRank.TWO, CardSuit.Club));
-                add(new Card(CardRank.THREE, CardSuit.Club));
-                add(new Card(CardRank.FIVE, CardSuit.Club));
-                add(new Card(CardRank.TWO, CardSuit.Heart));
-                add(new Card(CardRank.TWO, CardSuit.Spade));
-                add(new Card(CardRank.TWO, CardSuit.Diamond));
-                // common cards
-                add(new Card(CardRank.FIVE, CardSuit.Diamond));
-                add(new Card(CardRank.NINE, CardSuit.Spade));
-                add(new Card(CardRank.TEN, CardSuit.Club));
-                add(new Card(CardRank.JACK, CardSuit.Club));
-                add(new Card(CardRank.QUEUE, CardSuit.Club));
-            }
-        }), comparator);
-
-        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
-        assertEquals(0, game.getCommonCards().size());
-
-        game.execute(new Pass());
-        game.execute(new Pass());
-        game.execute(new Pass());
-
-        assertEquals(Round.FLOP, game.getCurrentRound());
-        assertEquals(3, game.getCommonCards().size());
-
-        game.execute(new Pass());
-        game.execute(new Pass());
-        game.execute(new Pass());
-
-        assertEquals(Round.TURN, game.getCurrentRound());
-        assertEquals(4, game.getCommonCards().size());
-
-        game.execute(new Pass());
-        game.execute(new Pass());
-        game.execute(new Pass());
-
-        assertEquals(Round.RIVER, game.getCurrentRound());
-        assertEquals(5, game.getCommonCards().size());
-
-        game.execute(new Pass());
-        game.execute(new Pass());
-        game.execute(new Pass());
-
-        assertEquals(Round.SHOWDOWN, game.getCurrentRound());
-        assertEquals(5, game.getCommonCards().size());
-
-        List<Player> winners = game.getWinners();
-        assertEquals(1, winners.size());
-        assertEquals("A", winners.get(0).getName());
-    }
-
-    @Test
-    public void should_all_in_player_also_is_winner_if_common_card_is_max_card_group_ranking() {
-        List<Player> players = new ArrayList<Player>() {
-            {
-                add(new Player("A"));
-                add(new Player("B"));
-                add(new Player("C"));
-            }
-        };
-        CardComparator comparator = new CardComparator();
-
-        Game game = new Game(players, new Poker(() -> new LinkedList<Card>() {
-            {
-                add(new Card(CardRank.TWO, CardSuit.Club));
-                add(new Card(CardRank.THREE, CardSuit.Club));
-                add(new Card(CardRank.FIVE, CardSuit.Club));
-                add(new Card(CardRank.TWO, CardSuit.Heart));
-                add(new Card(CardRank.TWO, CardSuit.Spade));
-                add(new Card(CardRank.TWO, CardSuit.Diamond));
-                // common cards
-                add(new Card(CardRank.EIGHT, CardSuit.Club));
-                add(new Card(CardRank.NINE, CardSuit.Club));
-                add(new Card(CardRank.TEN, CardSuit.Club));
-                add(new Card(CardRank.JACK, CardSuit.Club));
-                add(new Card(CardRank.QUEUE, CardSuit.Club));
-            }
-        }), comparator);
-
-
-        assertNull(game.getWinners());
-        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
-        assertEquals(0, game.getCommonCards().size());
-
         game.execute(new Bet());
         game.execute(new Bet());
-        game.execute(new Bet());
-
-        assertEquals(Round.FLOP, game.getCurrentRound());
-        assertEquals(3, game.getCommonCards().size());
-
-        game.execute(new Raise(2));
-        game.execute(new AllIn(1));
-        game.execute(new Bet());
-
-        assertEquals(Round.TURN, game.getCurrentRound());
-        assertEquals(4, game.getCommonCards().size());
-
-        game.execute(new Bet());
-        game.execute(new Bet());
+        game.execute(new Fold());
 
         assertEquals(Round.RIVER, game.getCurrentRound());
         assertEquals(5, game.getCommonCards().size());
 
         game.execute(new Bet());
-        game.execute(new Bet());
+        game.execute(new Fold());
 
-        assertEquals(Round.SHOWDOWN, game.getCurrentRound());
-        assertEquals(5, game.getCommonCards().size());
-
-        List<String> winnerNames = game.getWinners().stream().map(Player::getName).collect(Collectors.toList());
-        assertEquals(3, winnerNames.size());
-        assertTrue(winnerNames.contains("A"));
-        assertTrue(winnerNames.contains("B"));
-        assertTrue(winnerNames.contains("C"));
+        Map<Player, Integer> result = game.getDistributedResult();
+        assertEquals(1, result.size());
+        assertEquals(3, result.get(playerA).intValue());
     }
 }

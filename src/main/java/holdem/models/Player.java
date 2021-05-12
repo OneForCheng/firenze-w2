@@ -1,10 +1,17 @@
 package holdem.models;
 
+import holdem.enums.Round;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 public class Player {
     private boolean isActive;
     private boolean isTookAction;
     private boolean isAllIn;
-    private int currentRoundWager;
+    private Map<Round, Integer> roundWagers;
     private String name;
     private Card[] holeCards;
 
@@ -13,7 +20,7 @@ public class Player {
         this.isActive = true;
         this.isTookAction = false;
         this.isAllIn = false;
-        this.currentRoundWager = 0;
+        roundWagers = Arrays.stream(Round.values()).collect(Collectors.toMap(Function.identity(), round -> 0));
     }
 
     public String getName() {
@@ -36,12 +43,16 @@ public class Player {
         this.isTookAction = isTookAction;
     }
 
-    public int getCurrentRoundWager() {
-        return this.currentRoundWager;
+    public int getCurrentRoundWager(Round round) {
+        return this.roundWagers.get(round);
     }
 
-    public void setCurrentRoundWager(int wager) {
-        this.currentRoundWager = wager;
+    public void setCurrentRoundWager(Round round, int wager) {
+        this.roundWagers.put(round, wager);
+    }
+
+    public Map<Round, Integer> getRoundWagers() {
+        return this.roundWagers;
     }
 
     public void allIn() {

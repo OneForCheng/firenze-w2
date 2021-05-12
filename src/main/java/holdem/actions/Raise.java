@@ -1,6 +1,7 @@
 package holdem.actions;
 
 import holdem.Game;
+import holdem.enums.Round;
 import holdem.models.Player;
 
 public class Raise implements Action {
@@ -19,6 +20,8 @@ public class Raise implements Action {
         game.putInPot(currentBid);
         game.awaiting(activePlayer);
 
-        activePlayer.setCurrentRoundWager(activePlayer.getCurrentRoundWager() + currentBid);
+        Round currentRound = game.getCurrentRound();
+        int currentRoundWager = activePlayer.getCurrentRoundWager(currentRound);
+        activePlayer.setCurrentRoundWager(currentRound, currentRoundWager + currentBid);
     }
 }

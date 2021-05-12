@@ -2,12 +2,9 @@ package holdem;
 
 import holdem.actions.Action;
 import holdem.comparators.CardComparator;
-import holdem.comparators.BestCardGroupRanking;
-import holdem.enums.CardGroupRanking;
 import holdem.enums.Round;
 import holdem.models.*;
 import holdem.generators.Shuffled52Poker;
-import javafx.util.Pair;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -86,12 +83,9 @@ public class Game {
     private void nextRound() {
         List<Player> activePlayers = getActivePlayers();
 
-        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getCurrentRoundWager() == this.currentBid)) {
+        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getCurrentRoundWager(this.currentRound) == this.currentBid)) {
             this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
-            activePlayers.forEach(player -> {
-                player.setCurrentRoundWager(0);
-                player.setTookAction(false);
-            });
+            activePlayers.forEach(player -> player.setTookAction(false));
             handOutCommonCard();
         }
     }
@@ -142,16 +136,21 @@ public class Game {
         return this.commonCards;
     }
 
-    public List<Player> getWinners() {
+    public Map<Player, Integer> getDistributedResult() {
         if (!this.isOver()) return null;
-        List<Player> enablePlayers = new ArrayList<>(this.getActivePlayers());
-        enablePlayers.addAll(this.getAllInPlayers());
 
-        List<BestCardGroupRanking> playersMaxCardGroup = enablePlayers.stream().map(player -> {
-            Pair<CardGroupRanking, List<Card>> maxCardGroup = this.cardComparator.getMaxCardGroup(this.commonCards, player.getHoleCards());
-            return new BestCardGroupRanking(player, maxCardGroup.getKey(), maxCardGroup.getValue());
-        }).collect(Collectors.toList());
-        List<BestCardGroupRanking> winners = this.cardComparator.getMaxCardGroupPlayers(playersMaxCardGroup);
-        return winners.stream().map(BestCardGroupRanking::getPlayer).collect(Collectors.toList());
+        List<Player> activePlayers = this.getActivePlayers();
+        List<Player> allInPlayers = this.getAllInPlayers();
+
+        List<Player> mayWinMoneyPlayers = new ArrayList<>(activePlayers);
+        mayWinMoneyPlayers.addAll(allInPlayers);
+
+        LinkedHashMap<Player, Integer> result = new LinkedHashMap<>();
+
+        if (mayWinMoneyPlayers.size() == 1) {
+            result.put(mayWinMoneyPlayers.get(0), pot);
+        }
+
+        return result;
     }
 }

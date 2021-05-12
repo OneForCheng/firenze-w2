@@ -93,19 +93,4 @@ public class CardComparator {
         }
         return null;
     }
-
-    public List<BestCardGroupRanking> getMaxCardGroupPlayers(List<BestCardGroupRanking> bestCardGroupRankings) {
-        Map<CardGroupRanking, List<BestCardGroupRanking>> groupPlayerCardGroupRankings = bestCardGroupRankings.stream().collect(groupingBy(BestCardGroupRanking::getCardGroupRanking, toList()));
-
-        for (CardGroupRanking cardGroupRanking : CardGroupRanking.values()) {
-            List<BestCardGroupRanking> group = groupPlayerCardGroupRankings.get(cardGroupRanking);
-            if (group != null) {
-                IComparing comparing = this.comparisons.get(cardGroupRanking);
-                List<BestCardGroupRanking> descSortedGroup = group.stream().sorted((a, b) -> comparing.compare(b.getCards(), a.getCards())).collect(toList());
-                BestCardGroupRanking max = descSortedGroup.get(0);
-                return descSortedGroup.stream().filter(item -> comparing.compare(item.getCards(), max.getCards()) == 0).collect(toList());
-            }
-        }
-        return Collections.emptyList();
-    }
 }
