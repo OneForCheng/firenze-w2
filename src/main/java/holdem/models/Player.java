@@ -4,7 +4,7 @@ public class Player {
     private boolean isActive;
     private boolean isTookAction;
     private boolean isAllIn;
-    private int previousWager;
+    private int currentRoundWager;
     private String name;
     private Card[] holeCards;
 
@@ -13,7 +13,7 @@ public class Player {
         this.isActive = true;
         this.isTookAction = false;
         this.isAllIn = false;
-        this.previousWager = 0;
+        this.currentRoundWager = 0;
     }
 
     public String getName() {
@@ -36,12 +36,12 @@ public class Player {
         this.isTookAction = isTookAction;
     }
 
-    public int getPreviousWager() {
-        return this.previousWager;
+    public int getCurrentRoundWager() {
+        return this.currentRoundWager;
     }
 
-    public void setPreviousWager(int wager) {
-        this.previousWager = wager;
+    public void setCurrentRoundWager(int wager) {
+        this.currentRoundWager = wager;
     }
 
     public void allIn() {

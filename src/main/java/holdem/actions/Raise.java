@@ -19,6 +19,6 @@ public class Raise implements Action {
         game.putInPot(currentBid);
         game.awaiting(activePlayer);
 
-        activePlayer.setPreviousWager(activePlayer.getPreviousWager() + currentBid);
+        activePlayer.setCurrentRoundWager(activePlayer.getCurrentRoundWager() + currentBid);
     }
 }

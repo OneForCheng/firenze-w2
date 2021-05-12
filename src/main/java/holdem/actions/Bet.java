@@ -9,9 +9,9 @@ public class Bet implements Action {
         game.setCurrentBidForBet();
 
         int currentBid = game.getCurrentBid();
-        game.putInPot(currentBid - activePlayer.getPreviousWager());
+        game.putInPot(currentBid - activePlayer.getCurrentRoundWager());
         game.awaiting(activePlayer);
 
-        activePlayer.setPreviousWager(currentBid);
+        activePlayer.setCurrentRoundWager(currentBid);
     }
 }

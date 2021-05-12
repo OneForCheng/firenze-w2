@@ -84,14 +84,17 @@ public class Game {
     private void nextRound() {
         List<Player> activePlayers = getActivePlayers();
 
-        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getPreviousWager() == this.currentBid)) {
+        if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getCurrentRoundWager() == this.currentBid)) {
             this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
-            activePlayers.stream().forEach(player -> player.setTookAction(false));
-            addCommonCard();
+            activePlayers.forEach(player -> {
+                player.setCurrentRoundWager(0);
+                player.setTookAction(false);
+            });
+            handOutCommonCard();
         }
     }
 
-    private void addCommonCard() {
+    private void handOutCommonCard() {
         if (this.currentRound == Round.FLOP) {
             this.commonCards.add(this.poker.handOut());
             this.commonCards.add(this.poker.handOut());
@@ -129,7 +132,7 @@ public class Game {
 
     private List<Player> getActivePlayers() {
         List<Player> activePlayers = this.players.stream().filter(Player::isActive).collect(Collectors.toList());
-        ;
+
         return activePlayers;
     }
 
@@ -139,7 +142,10 @@ public class Game {
 
     public List<Player> getWinners() {
         if (!this.isOver()) return null;
-        List<PlayerCardGroupRanking> playersMaxCardGroup = this.getActivePlayers().stream().map(player -> {
+        List<Player> enablePlayers = new ArrayList<>(this.getActivePlayers());
+        enablePlayers.addAll(this.getAllInPlayers());
+
+        List<PlayerCardGroupRanking> playersMaxCardGroup = enablePlayers.stream().map(player -> {
             Pair<CardGroupRanking, List<Card>> maxCardGroup = this.cardComparator.getMaxCardGroup(this.commonCards, player.getHoleCards());
             return new PlayerCardGroupRanking(player, maxCardGroup.getKey(), maxCardGroup.getValue());
         }).collect(Collectors.toList());
