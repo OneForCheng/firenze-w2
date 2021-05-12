@@ -1,4 +1,4 @@
-package holdem.rankings;
+package holdem.comparators.rankings;
 
 import holdem.enums.CardRank;
 import holdem.enums.CardSuit;
