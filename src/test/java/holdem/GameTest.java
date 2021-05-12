@@ -5,7 +5,7 @@ import holdem.enums.CardRank;
 import holdem.enums.CardSuit;
 import holdem.enums.Round;
 import holdem.models.Card;
-import holdem.models.CardComparator;
+import holdem.comparators.CardComparator;
 import holdem.models.Player;
 import holdem.models.Poker;
 import org.junit.Test;

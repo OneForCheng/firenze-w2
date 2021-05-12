@@ -1,6 +1,8 @@
 package holdem;
 
 import holdem.actions.Action;
+import holdem.comparators.CardComparator;
+import holdem.comparators.PlayerCardGroupRanking;
 import holdem.enums.CardGroupRanking;
 import holdem.enums.Round;
 import holdem.models.*;

@@ -1,6 +1,8 @@
-package holdem.models;
+package holdem.comparators;
 
 import holdem.enums.CardGroupRanking;
+import holdem.models.Card;
+import holdem.models.Player;
 
 import java.util.List;
 
