@@ -1,4 +1,4 @@
-package holdem.comparings;
+package holdem.comparators.comparings;
 
 import holdem.enums.CardRank;
 import holdem.models.Card;
@@ -6,11 +6,12 @@ import holdem.models.Card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
-public class TwoPairComparing extends AbstractComparing {
+public class OnePairComparing extends AbstractComparing {
     public int compare(List<Card> first, List<Card> second) {
         int firstWeight = this.getCardGroupWeight(first);
         int secondWeight = this.getCardGroupWeight(second);
@@ -24,17 +25,15 @@ public class TwoPairComparing extends AbstractComparing {
 
         for (Integer key : groupCards.keySet()) {
             if (groupCards.get(key) == 2) {
-                nums.add(key);
+                weight += key * Math.pow(CardRank.ACE.getNumber(), 3);
             } else {
-                weight += key;
+                nums.add(key);
             }
         }
 
-        if (nums.get(0) > nums.get(1)) {
-            weight += nums.get(0) * CardRank.ACE.getNumber() * CardRank.ACE.getNumber() + nums.get(1)  * CardRank.ACE.getNumber();
-        } else {
-            weight += nums.get(0)  * CardRank.ACE.getNumber() + nums.get(1) * CardRank.ACE.getNumber() * CardRank.ACE.getNumber();
-        }
+        List<Integer> sortedNums = nums.stream().sorted().collect(Collectors.toList());
+
+        weight += sortedNums.get(0) + sortedNums.get(1) * CardRank.ACE.getNumber() +  sortedNums.get(2) * CardRank.ACE.getNumber() * CardRank.ACE.getNumber();
 
         return  weight;
     }

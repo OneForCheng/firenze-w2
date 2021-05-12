@@ -1,9 +1,9 @@
 package holdem.comparators;
 
-import holdem.comparings.*;
+import holdem.comparators.comparings.*;
+import holdem.comparators.rankings.*;
 import holdem.enums.CardGroupRanking;
 import holdem.models.Card;
-import holdem.comparators.rankings.*;
 import javafx.util.Pair;
 
 import java.util.*;

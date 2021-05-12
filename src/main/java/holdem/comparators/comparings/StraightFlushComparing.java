@@ -1,4 +1,4 @@
-package holdem.comparings;
+package holdem.comparators.comparings;
 
 import holdem.models.Card;
 
