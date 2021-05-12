@@ -6,12 +6,12 @@ import holdem.models.Player;
 
 import java.util.List;
 
-public class PlayerCardGroupRanking {
+public class BestCardGroupRanking {
     private Player player;
     private CardGroupRanking cardGroupRanking;
     private List<Card> cards;
 
-    public PlayerCardGroupRanking(Player player, CardGroupRanking cardGroupRanking, List<Card> cards) {
+    public BestCardGroupRanking(Player player, CardGroupRanking cardGroupRanking, List<Card> cards) {
         this.player = player;
         this.cardGroupRanking = cardGroupRanking;
         this.cards = cards;

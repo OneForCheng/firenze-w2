@@ -2,7 +2,7 @@ package holdem;
 
 import holdem.actions.Action;
 import holdem.comparators.CardComparator;
-import holdem.comparators.PlayerCardGroupRanking;
+import holdem.comparators.BestCardGroupRanking;
 import holdem.enums.CardGroupRanking;
 import holdem.enums.Round;
 import holdem.models.*;
@@ -147,11 +147,11 @@ public class Game {
         List<Player> enablePlayers = new ArrayList<>(this.getActivePlayers());
         enablePlayers.addAll(this.getAllInPlayers());
 
-        List<PlayerCardGroupRanking> playersMaxCardGroup = enablePlayers.stream().map(player -> {
+        List<BestCardGroupRanking> playersMaxCardGroup = enablePlayers.stream().map(player -> {
             Pair<CardGroupRanking, List<Card>> maxCardGroup = this.cardComparator.getMaxCardGroup(this.commonCards, player.getHoleCards());
-            return new PlayerCardGroupRanking(player, maxCardGroup.getKey(), maxCardGroup.getValue());
+            return new BestCardGroupRanking(player, maxCardGroup.getKey(), maxCardGroup.getValue());
         }).collect(Collectors.toList());
-        List<PlayerCardGroupRanking> winners = this.cardComparator.getMaxCardGroupPlayers(playersMaxCardGroup);
-        return winners.stream().map(PlayerCardGroupRanking::getPlayer).collect(Collectors.toList());
+        List<BestCardGroupRanking> winners = this.cardComparator.getMaxCardGroupPlayers(playersMaxCardGroup);
+        return winners.stream().map(BestCardGroupRanking::getPlayer).collect(Collectors.toList());
     }
 }
