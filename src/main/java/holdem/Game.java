@@ -1,11 +1,11 @@
 package holdem;
 
 import holdem.actions.Action;
+import holdem.enums.CardGroupRanking;
 import holdem.enums.Round;
-import holdem.models.Card;
-import holdem.models.Poker;
-import holdem.models.Player;
+import holdem.models.*;
 import holdem.generators.Shuffled52Poker;
+import javafx.util.Pair;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,17 +16,24 @@ public class Game {
     private int pot;
     private Queue<Player> awaitingPlayers;
     private List<Player> players;
-    private Queue<Card> commonCards;
+    private List<Card> commonCards;
     private Poker poker;
+    private CardComparator cardComparator;
 
     public Game(Player... players) {
-        this.players = Arrays.asList(players);
+        this(Arrays.asList(players), new Poker(new Shuffled52Poker()), new CardComparator());
+    }
+
+    public Game(List<Player> players, Poker poker, CardComparator cardComparator) {
+        this.players = players;
+        this.poker = poker;
+        this.cardComparator = cardComparator;
+
         this.awaitingPlayers = new LinkedList<>(this.players);
         this.pot = 0;
         this.currentBid = 0;
         this.currentRound = Round.PRE_FLOP;
-        this.poker = new Poker(new Shuffled52Poker());
-        this.commonCards = new LinkedList<>();
+        this.commonCards = new ArrayList<>();
         this.giveOutHoleCardsToPlayers(this.players, this.poker);
     }
 
@@ -75,7 +82,7 @@ public class Game {
     }
 
     private void nextRound() {
-        List<Player> activePlayers = this.players.stream().filter(Player::isActive).collect(Collectors.toList());
+        List<Player> activePlayers = getActivePlayers();
 
         if (activePlayers.stream().allMatch(Player::isTookAction) && activePlayers.stream().allMatch(player -> player.getPreviousWager() == this.currentBid)) {
             this.currentRound = Round.values()[this.currentRound.ordinal() + 1];
@@ -116,11 +123,27 @@ public class Game {
     }
 
     public boolean isOver() {
-        List<Player> activePlayers = this.players.stream().filter(Player::isActive).collect(Collectors.toList());;
+        List<Player> activePlayers = getActivePlayers();
         return activePlayers.size() == 1 || this.getCurrentRound() == Round.SHOWDOWN;
     }
 
-    public Queue<Card> getCommonCards() {
+    private List<Player> getActivePlayers() {
+        List<Player> activePlayers = this.players.stream().filter(Player::isActive).collect(Collectors.toList());
+        ;
+        return activePlayers;
+    }
+
+    public List<Card> getCommonCards() {
         return this.commonCards;
+    }
+
+    public List<Player> getWinners() {
+        if (!this.isOver()) return null;
+        List<PlayerCardGroupRanking> playersMaxCardGroup = this.getActivePlayers().stream().map(player -> {
+            Pair<CardGroupRanking, List<Card>> maxCardGroup = this.cardComparator.getMaxCardGroup(this.commonCards, player.getHoleCards());
+            return new PlayerCardGroupRanking(player, maxCardGroup.getKey(), maxCardGroup.getValue());
+        }).collect(Collectors.toList());
+        List<PlayerCardGroupRanking> winners = this.cardComparator.getMaxCardGroupPlayers(playersMaxCardGroup);
+        return winners.stream().map(PlayerCardGroupRanking::getPlayer).collect(Collectors.toList());
     }
 }

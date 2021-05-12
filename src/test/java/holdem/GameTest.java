@@ -1,9 +1,20 @@
 package holdem;
 
 import holdem.actions.*;
+import holdem.enums.CardRank;
+import holdem.enums.CardSuit;
 import holdem.enums.Round;
+import holdem.models.Card;
+import holdem.models.CardComparator;
 import holdem.models.Player;
+import holdem.models.Poker;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.junit.Assert.*;
 
 public class GameTest  {
@@ -312,5 +323,138 @@ public class GameTest  {
 
         assertEquals(Round.SHOWDOWN, game.getCurrentRound());
         assertEquals(5, game.getCommonCards().size());
+    }
+
+
+    @Test
+    public void should_all_player_are_winner_if_common_card_is_max_card_group_ranking() {
+        List<Player> players = new ArrayList<Player>() {
+            {
+                add(new Player("A"));
+                add(new Player("B"));
+                add(new Player("C"));
+            }
+        };
+        CardComparator comparator = new CardComparator();
+
+        Game game = new Game(players, new Poker(() -> new LinkedList<Card>() {
+            {
+                add(new Card(CardRank.TWO, CardSuit.Club));
+                add(new Card(CardRank.THREE, CardSuit.Club));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+                add(new Card(CardRank.TWO, CardSuit.Heart));
+                add(new Card(CardRank.TWO, CardSuit.Spade));
+                add(new Card(CardRank.TWO, CardSuit.Diamond));
+                // common cards
+                add(new Card(CardRank.EIGHT, CardSuit.Club));
+                add(new Card(CardRank.NINE, CardSuit.Club));
+                add(new Card(CardRank.TEN, CardSuit.Club));
+                add(new Card(CardRank.JACK, CardSuit.Club));
+                add(new Card(CardRank.QUEUE, CardSuit.Club));
+            }
+        }), comparator);
+
+
+        assertNull(game.getWinners());
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
+        assertEquals(0, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.FLOP, game.getCurrentRound());
+        assertEquals(3, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.TURN, game.getCurrentRound());
+        assertEquals(4, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.RIVER, game.getCurrentRound());
+        assertEquals(5, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.SHOWDOWN, game.getCurrentRound());
+        assertEquals(5, game.getCommonCards().size());
+
+        List<String> winnerNames = game.getWinners().stream().map(Player::getName).collect(Collectors.toList());
+        assertEquals(3, winnerNames.size());
+        assertTrue(winnerNames.contains("A"));
+        assertTrue(winnerNames.contains("B"));
+        assertTrue(winnerNames.contains("C"));
+    }
+
+    @Test
+    public void should_player_a_is_winner_if_card_group_of_player_a_is_max_card_group_ranking() {
+        List<Player> players = new ArrayList<Player>() {
+            {
+                add(new Player("A"));
+                add(new Player("B"));
+                add(new Player("C"));
+            }
+        };
+        CardComparator comparator = new CardComparator();
+
+        Game game = new Game(players, new Poker(() -> new LinkedList<Card>() {
+            {
+                add(new Card(CardRank.TWO, CardSuit.Club));
+                add(new Card(CardRank.THREE, CardSuit.Club));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+                add(new Card(CardRank.TWO, CardSuit.Heart));
+                add(new Card(CardRank.TWO, CardSuit.Spade));
+                add(new Card(CardRank.TWO, CardSuit.Diamond));
+                // common cards
+                add(new Card(CardRank.FIVE, CardSuit.Diamond));
+                add(new Card(CardRank.NINE, CardSuit.Spade));
+                add(new Card(CardRank.TEN, CardSuit.Club));
+                add(new Card(CardRank.JACK, CardSuit.Club));
+                add(new Card(CardRank.QUEUE, CardSuit.Club));
+            }
+        }), comparator);
+
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
+        assertEquals(0, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.FLOP, game.getCurrentRound());
+        assertEquals(3, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.TURN, game.getCurrentRound());
+        assertEquals(4, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.RIVER, game.getCurrentRound());
+        assertEquals(5, game.getCommonCards().size());
+
+        game.execute(new Pass());
+        game.execute(new Pass());
+        game.execute(new Pass());
+
+        assertEquals(Round.SHOWDOWN, game.getCurrentRound());
+        assertEquals(5, game.getCommonCards().size());
+
+        List<Player> winners = game.getWinners();
+        assertEquals(1, winners.size());
+        assertEquals("A", winners.get(0).getName());
     }
 }
