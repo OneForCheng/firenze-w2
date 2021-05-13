@@ -105,7 +105,7 @@ public class Game {
         this.pot += bid;
     }
 
-    public Map<Player, Integer> getDistributedResult() {
+    public Map<Player, Double> getDistributedResult() {
         if (!this.isOver()) return null;
 
         List<Player> activePlayers = this.getActivePlayers();
@@ -114,10 +114,10 @@ public class Game {
         List<Player> mayWinMoneyPlayers = new ArrayList<>(activePlayers);
         mayWinMoneyPlayers.addAll(allInPlayers);
 
-        LinkedHashMap<Player, Integer> result = new LinkedHashMap<>();
+        LinkedHashMap<Player, Double> result = new LinkedHashMap<>();
 
         if (mayWinMoneyPlayers.size() == 1) {
-            result.put(mayWinMoneyPlayers.get(0), pot);
+            result.put(mayWinMoneyPlayers.get(0), (double) pot);
             return result;
         }
 
@@ -127,12 +127,12 @@ public class Game {
         List<BestCardGroupRanking> winners = group.get(0);
         int winnerCount = winners.size();
         if (winnerCount == 1) {
-            result.put(winners.get(0).getPlayer(), pot);
+            result.put(winners.get(0).getPlayer(), (double)pot);
             return result;
         }
 
         winners.forEach(winner -> {
-            result.put(winner.getPlayer(), pot / winnerCount);
+            result.put(winner.getPlayer(), (double) pot / winnerCount);
         });
 
         return result;

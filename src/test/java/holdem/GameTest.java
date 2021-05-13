@@ -18,6 +18,8 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class GameTest  {
+    double DELTA = 0.01;
+
     @Test
     public void player_a_should_be_the_first_active_player() {
         Game game = new Game(new Player("A"), new Player("B"), new Player("C"));
@@ -386,9 +388,9 @@ public class GameTest  {
         game.execute(new Bet());
         game.execute(new Fold());
 
-        Map<Player, Integer> result = game.getDistributedResult();
+        Map<Player, Double> result = game.getDistributedResult();
         assertEquals(1, result.size());
-        assertEquals(3, result.get(playerA).intValue());
+        assertEquals(3, result.get(playerA), DELTA);
     }
 
     @Test
@@ -449,9 +451,9 @@ public class GameTest  {
 
         assertEquals(Round.SHOWDOWN, game.getCurrentRound());
 
-        Map<Player, Integer> result = game.getDistributedResult();
+        Map<Player, Double> result = game.getDistributedResult();
         assertEquals(1, result.size());
-        assertEquals(6, result.get(playerA).intValue());
+        assertEquals(6, result.get(playerA), DELTA);
     }
 
     @Test
@@ -512,10 +514,10 @@ public class GameTest  {
 
         assertEquals(Round.SHOWDOWN, game.getCurrentRound());
 
-        Map<Player, Integer> result = game.getDistributedResult();
+        Map<Player, Double> result = game.getDistributedResult();
         assertEquals(2, result.size());
-        assertEquals(6, result.get(playerA).intValue());
-        assertEquals(6, result.get(playerA).intValue());
+        assertEquals(6, result.get(playerA), DELTA);
+        assertEquals(6, result.get(playerA), DELTA);
     }
 
     @Test
@@ -576,9 +578,9 @@ public class GameTest  {
 
         assertEquals(Round.SHOWDOWN, game.getCurrentRound());
 
-        Map<Player, Integer> result = game.getDistributedResult();
-        assertEquals(2, result.get(playerA).intValue());
-        assertEquals(2, result.get(playerB).intValue());
-        assertEquals(2, result.get(playerC).intValue());
+        Map<Player, Double> result = game.getDistributedResult();
+        assertEquals(2, result.get(playerA), DELTA);
+        assertEquals(2, result.get(playerB), DELTA);
+        assertEquals(2, result.get(playerC), DELTA);
     }
 }
