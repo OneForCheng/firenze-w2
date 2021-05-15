@@ -1,6 +1,7 @@
 package holdem.actions;
 
 import holdem.Game;
+import holdem.enums.Round;
 import holdem.models.Player;
 
 public class AllIn implements Action {
@@ -18,5 +19,9 @@ public class AllIn implements Action {
 
         activePlayer.allIn();
         activePlayer.inActive();
+
+        Round currentRound = game.getCurrentRound();
+        int currentRoundWager = activePlayer.getCurrentRoundWager(currentRound);
+        activePlayer.setCurrentRoundWager(currentRound, currentRoundWager + this.wager);
     }
 }

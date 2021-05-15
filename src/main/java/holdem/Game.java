@@ -10,6 +10,7 @@ import holdem.generators.Shuffled52Poker;
 import javafx.util.Pair;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Game {
@@ -114,26 +115,43 @@ public class Game {
         List<Player> mayWinMoneyPlayers = new ArrayList<>(activePlayers);
         mayWinMoneyPlayers.addAll(allInPlayers);
 
-        LinkedHashMap<Player, Double> result = new LinkedHashMap<>();
-
-        if (mayWinMoneyPlayers.size() == 1) {
-            result.put(mayWinMoneyPlayers.get(0), (double) pot);
-            return result;
-        }
-
         List<BestCardGroupRanking> bestCardGroupRankings = getBestCardGroupRankings(mayWinMoneyPlayers);
         List<List<BestCardGroupRanking>> group = this.cardComparator.getDescSortedBestCardGroupRankingGroup(bestCardGroupRankings);
 
-        List<BestCardGroupRanking> winners = group.get(0);
-        int winnerCount = winners.size();
-        if (winnerCount == 1) {
-            result.put(winners.get(0).getPlayer(), (double)pot);
-            return result;
-        }
+        LinkedHashMap<Player, Double> result = new LinkedHashMap<>();
 
-        winners.forEach(winner -> {
-            result.put(winner.getPlayer(), (double) pot / winnerCount);
-        });
+        Map<Player, Integer> playerTotalWagers = this.players.stream().collect(Collectors.toMap(Function.identity(), Player::getTotalWager));
+
+        for (List<BestCardGroupRanking> winners : group) {
+            if (winners.stream().noneMatch(winner -> winner.getPlayer().isAllIn())) {
+                Integer remainWager = playerTotalWagers.values().stream().reduce(Integer::sum).orElse(0);
+                winners.forEach(winner -> result.put(winner.getPlayer(), (double)remainWager / winners.size()));
+                break;
+            } else {
+                List<BestCardGroupRanking> sortedWinners = winners.stream().sorted(Comparator.comparingInt(item -> item.getPlayer().getTotalWager())).collect(Collectors.toList());
+                int size = sortedWinners.size();
+                double winTotalWager, previousWinTotalWager = 0;
+                for(int i = 0; i < size; i++) {
+                    winTotalWager = 0;
+
+                    Player winner = sortedWinners.get(i).getPlayer();
+                    int totalWager = winner.getTotalWager();
+
+                    for (Player player : playerTotalWagers.keySet()) {
+                        int wager = playerTotalWagers.get(player);
+                        if (totalWager > wager) {
+                            winTotalWager += wager;
+                            playerTotalWagers.put(player, 0);
+                        } else {
+                            winTotalWager += totalWager;
+                            playerTotalWagers.put(player, wager - totalWager);
+                        }
+                    }
+                    previousWinTotalWager += winTotalWager / (size - i);
+                    result.put(winner, previousWinTotalWager);
+                }
+            }
+        }
 
         return result;
     }

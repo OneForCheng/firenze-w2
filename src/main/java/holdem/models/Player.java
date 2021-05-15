@@ -70,4 +70,8 @@ public class Player {
     public void setHoleCards(Card[] holeCards) {
         this.holeCards = holeCards;
     }
+
+    public int getTotalWager() {
+        return roundWagers.values().stream().reduce(Integer::sum).orElse(0);
+    }
 }

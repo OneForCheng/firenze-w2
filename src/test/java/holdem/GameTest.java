@@ -583,4 +583,67 @@ public class GameTest  {
         assertEquals(2, result.get(playerB), DELTA);
         assertEquals(2, result.get(playerC), DELTA);
     }
+
+    @Test
+    public void should_player_b_will_win_remain_wager_if_player_a_is_max_card_group_but_all_in_in_third_round() {
+        Player playerA = new Player("A");
+        Player playerB = new Player("B");
+        Player playerC = new Player("C");
+
+        List<Player> players = new ArrayList<Player>() {
+            {
+
+                add(playerA);
+                add(playerB);
+                add(playerC);
+            }
+        };
+        CardComparator comparator = new CardComparator();
+        Game game = new Game(players, new Poker(() -> new LinkedList<Card>() {
+            {
+                add(new Card(CardRank.TWO, CardSuit.Club));
+                add(new Card(CardRank.THREE, CardSuit.Club));
+                add(new Card(CardRank.FIVE, CardSuit.Spade));
+                add(new Card(CardRank.TWO, CardSuit.Heart));
+                add(new Card(CardRank.TWO, CardSuit.Spade));
+                add(new Card(CardRank.TWO, CardSuit.Diamond));
+                // common cards
+                add(new Card(CardRank.SIX, CardSuit.Club));
+                add(new Card(CardRank.FIVE, CardSuit.Club));
+                add(new Card(CardRank.FOUR, CardSuit.Club));
+                add(new Card(CardRank.JACK, CardSuit.Heart));
+                add(new Card(CardRank.QUEUE, CardSuit.Spade));
+            }
+        }), comparator);
+
+        assertEquals(Round.PRE_FLOP, game.getCurrentRound());
+
+        game.execute(new Bet());
+        game.execute(new Bet());
+        game.execute(new Bet());
+
+        assertEquals(Round.FLOP, game.getCurrentRound());
+
+        game.execute(new Bet());
+        game.execute(new Bet());
+        game.execute(new Bet());
+
+        assertEquals(Round.TURN, game.getCurrentRound());
+
+        game.execute(new AllIn(3));
+        game.execute(new Bet());
+        game.execute(new Bet());
+
+        assertEquals(Round.RIVER, game.getCurrentRound());
+
+        game.execute(new Bet());
+        game.execute(new Bet());
+
+        assertEquals(Round.SHOWDOWN, game.getCurrentRound());
+
+        Map<Player, Double> result = game.getDistributedResult();
+        assertEquals(2, result.size());
+        assertEquals(15, result.get(playerA), DELTA);
+        assertEquals(6, result.get(playerB), DELTA);
+    }
 }
