@@ -17,11 +17,11 @@ public class Game {
     private Round currentRound;
     private int currentBid;
     private int pot;
-    private Queue<Player> awaitingPlayers;
-    private List<Player> players;
-    private List<Card> commonCards;
-    private Poker poker;
-    private CardComparator cardComparator;
+    private final Queue<Player> awaitingPlayers;
+    private final List<Player> players;
+    private final List<Card> commonCards;
+    private final Poker poker;
+    private final CardComparator cardComparator;
 
     public Game(Player... players) {
         this(Arrays.asList(players), new Poker(new Shuffled52Poker()), new CardComparator());
@@ -150,6 +150,8 @@ public class Game {
                     previousWinTotalWager += winTotalWager / (size - i);
                     result.put(winner, previousWinTotalWager);
                 }
+                if (winners.stream().anyMatch(winner -> !winner.getPlayer().isAllIn()))
+                    break;
             }
         }
 
